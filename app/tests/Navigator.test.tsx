@@ -5,6 +5,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Navigator from "../components/Navigator";
 import { useRouter } from "next/navigation";
+import { Routes } from "../utils/routes";
 
 jest.mock("next/navigation", () => ({
   push: jest.fn(),
@@ -70,7 +71,7 @@ describe("Navigator component", () => {
     it("clicks the button to add a word", async () => {
       const addButton = screen.getByRole("button", { name: /add a word/i });
       await userEvent.click(addButton);
-      expect(mockPush).toHaveBeenCalledWith("/add");
+      expect(mockPush).toHaveBeenCalledWith(Routes.ADD);
     });
 
     it("clicks the button to start learning", async () => {
@@ -78,7 +79,7 @@ describe("Navigator component", () => {
         name: /start learning/i,
       });
       await userEvent.click(startButton);
-      expect(mockPush).toHaveBeenCalledWith("/learn");
+      expect(mockPush).toHaveBeenCalledWith(Routes.LEARN);
     });
 
     it("clicks the button to show the learned words", async () => {
@@ -86,7 +87,7 @@ describe("Navigator component", () => {
         name: /shows the learned words/i,
       });
       await userEvent.click(learnedWordsButton);
-      expect(mockPush).toHaveBeenCalledWith("/learned-words");
+      expect(mockPush).toHaveBeenCalledWith(Routes.LEARNED_WORDS);
     });
 
     it("clicks the button to show the words to learn", async () => {
@@ -94,7 +95,7 @@ describe("Navigator component", () => {
         name: /shows the words to learn/i,
       });
       await userEvent.click(toLearnButton);
-      expect(mockPush).toHaveBeenCalledWith("/words-to-learn");
+      expect(mockPush).toHaveBeenCalledWith(Routes.WORDS_TO_LEARN);
     });
   });
 });

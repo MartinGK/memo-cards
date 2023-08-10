@@ -5,13 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { VscDebugStart } from "react-icons/vsc";
 import { GoChecklist } from "react-icons/go";
 import { TbListSearch } from "react-icons/tb";
-
-enum Routes {
-  ADD = "/add",
-  LEARN = "/learn",
-  LEARNED_WORDS = "/learned-words",
-  WORDS_TO_LEARN = "/words-to-learn",
-}
+import { Routes } from "../utils/routes";
 
 export default function Navigator() {
   const { push } = useRouter();
