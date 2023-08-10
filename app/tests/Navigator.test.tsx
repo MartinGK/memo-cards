@@ -4,24 +4,27 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Navigator from "../components/Navigator";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
-jest.mock("next/router", () => ({
+jest.mock("next/navigation", () => ({
   push: jest.fn(),
   useRouter: jest.fn(),
 }));
 
 describe("Navigator component", () => {
-  beforeEach(() => {
-    render(<Navigator />);
-  });
-
-  it("should exists a navigator", () => {
-    const Navigator = screen.getByRole("navigator");
-    expect(Navigator).toBeInTheDocument();
-  });
-
   describe("check the existence", () => {
+    beforeEach(() => {
+      (useRouter as jest.Mock).mockReturnValue({
+        push: jest.fn(),
+      });
+      render(<Navigator />);
+    });
+
+    it("should exists a navigator", () => {
+      const Navigator = screen.getByRole("navigator");
+      expect(Navigator).toBeInTheDocument();
+    });
+
     it("should have a button to add a word", () => {
       const addButton = screen.getByRole("button", { name: /add a word/i });
       expect(addButton).toBeInTheDocument();
@@ -36,21 +39,26 @@ describe("Navigator component", () => {
 
     it("should have a button to show the learned words", () => {
       const learnedWordsButton = screen.getByRole("button", {
-        name: /show the learned words/i,
+        name: /shows the learned words/i,
       });
       expect(learnedWordsButton).toBeInTheDocument();
     });
 
     it("should have a button to show the words to learn", () => {
       const toLearnButton = screen.getByRole("button", {
-        name: /show the words to learn/i,
+        name: /shows the words to learn/i,
       });
       expect(toLearnButton).toBeInTheDocument();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
     });
   });
 
   describe("check the button's click functionality to change the path", () => {
     const mockPush = jest.fn();
+
     beforeEach(() => {
       (useRouter as jest.Mock).mockReturnValue({
         push: mockPush,
@@ -59,32 +67,33 @@ describe("Navigator component", () => {
       render(<Navigator />);
     });
 
-    it("clicks the button to add a word", () => {
+    it("clicks the button to add a word", async () => {
       const addButton = screen.getByRole("button", { name: /add a word/i });
-      userEvent.click(addButton);
+      await userEvent.click(addButton);
       expect(mockPush).toHaveBeenCalledWith("/add");
     });
 
-    it("clicks the button to start learning", () => {
+    it("clicks the button to start learning", async () => {
       const startButton = screen.getByRole("button", {
         name: /start learning/i,
       });
-      userEvent.click(startButton);
+      await userEvent.click(startButton);
       expect(mockPush).toHaveBeenCalledWith("/learn");
     });
 
-    it("clicks the button to show the learned words", () => {
+    it("clicks the button to show the learned words", async () => {
       const learnedWordsButton = screen.getByRole("button", {
-        name: /show the learned words/i,
+        name: /shows the learned words/i,
       });
-      userEvent.click(learnedWordsButton);
+      await userEvent.click(learnedWordsButton);
       expect(mockPush).toHaveBeenCalledWith("/learned-words");
     });
 
-    it("clicks the button to show the words to learn", () => {
+    it("clicks the button to show the words to learn", async () => {
       const toLearnButton = screen.getByRole("button", {
-        name: /show the words to learn/i,
+        name: /shows the words to learn/i,
       });
+      await userEvent.click(toLearnButton);
       expect(mockPush).toHaveBeenCalledWith("/words-to-learn");
     });
   });

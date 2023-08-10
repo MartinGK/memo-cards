@@ -1,17 +1,58 @@
-import React from 'react'
+'use client'
+import React from "react";
+import { useRouter } from "next/navigation";
+import { FaPlus } from "react-icons/fa";
+import { VscDebugStart } from "react-icons/vsc";
+import { GoChecklist } from "react-icons/go";
+import { TbListSearch } from "react-icons/tb";
 
+enum Routes {
+  ADD = "/add",
+  LEARN = "/learn",
+  LEARNED_WORDS = "/learned-words",
+  WORDS_TO_LEARN = "/words-to-learn",
+}
 
-export default function Header() {
+export default function Navigator() {
+  const { push } = useRouter();
+
+  const redirect = (to: Routes) => {
+    push(to);
+  };
+
   return (
-  <header>
-    <h1>Welcome</h1>
-    <nav>
+    <nav aria-label="navigator" role="navigator">
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li>
+          <button onClick={() => redirect(Routes.ADD)} aria-label="add a word">
+            <FaPlus />
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => redirect(Routes.LEARN)}
+            aria-label="start learning"
+          >
+            <VscDebugStart />
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => redirect(Routes.LEARNED_WORDS)}
+            aria-label="shows the learned words"
+          >
+            <GoChecklist />
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => redirect(Routes.WORDS_TO_LEARN)}
+            aria-label="shows the words to learn"
+          >
+            <TbListSearch />
+          </button>
+        </li>
       </ul>
     </nav>
-  </header>
-  )
+  );
 }
