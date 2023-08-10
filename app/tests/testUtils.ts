@@ -1,23 +1,29 @@
 import { screen } from "@testing-library/react";
-
-export const disappearAnimationTime = 3000;
-export const appearingAnimationTime = 3000;
+import {
+TIME_TO_DISAPPEAR_CARD,
+TIME_TO_APPEAR_CARD
+} from "../utils/constants";
 
 export const expectCardToBeNullAfterAnimation = () => {
-  jest.useFakeTimers();
-  setTimeout(() => {
+  fakeTimersToCallACallback(() => {
     const card = screen.getByRole("card");
     expect(card).toBe(null);
-  }, disappearAnimationTime);
-  jest.runAllTimers();
+  }, TIME_TO_DISAPPEAR_CARD);
 };
 
 export const expectCardToAppearAfterAnimation = () => {
-  jest.useFakeTimers();
-  setTimeout(() => {
+  fakeTimersToCallACallback(() => {
     const card = screen.getByRole("card");
-    expect(card).toBeInTheDocument()
-  }, appearingAnimationTime);
+    expect(card).toBeInTheDocument();
+  }, TIME_TO_APPEAR_CARD);
+};
+
+export const fakeTimersToCallACallback = (
+  callback: () => void,
+  timeToFake: number
+) => {
+  jest.useFakeTimers();
+  setTimeout(callback, timeToFake);
   jest.runAllTimers();
 };
 
@@ -31,7 +37,6 @@ export const mockGlobalStorage = ({
   setItem = jest.fn(),
   clear = jest.fn(),
 }) => {
-
   const localStorageMock = {
     getItem,
     setItem,
