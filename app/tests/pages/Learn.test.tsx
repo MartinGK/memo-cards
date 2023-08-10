@@ -34,7 +34,7 @@ const { localStorageMock } = mockGlobalStorage({
   ),
 });
 
-describe("CardWordsToRelate component", () => {
+describe("Learn Page", () => {
   beforeEach(() => {
     render(<Learn />);
   });
