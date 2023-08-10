@@ -2,100 +2,76 @@
  * @jest-environment jsdom
  */
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Navigator from "../components/Navigator";
-import { useRouter } from "next/navigation";
 import { Routes } from "../utils/routes";
 
-jest.mock("next/navigation", () => ({
-  push: jest.fn(),
-  useRouter: jest.fn(),
-}));
-
 describe("Navigator component", () => {
-  describe("check the existence", () => {
-    beforeEach(() => {
-      (useRouter as jest.Mock).mockReturnValue({
-        push: jest.fn(),
-      });
-      render(<Navigator />);
-    });
+  beforeEach(() => {
+    render(<Navigator />);
+  });
 
+  describe("check the existence", () => {
     it("should exists a navigator", () => {
       const Navigator = screen.getByRole("navigator");
       expect(Navigator).toBeInTheDocument();
     });
 
-    it("should have a button to add a word", () => {
-      const addButton = screen.getByRole("button", { name: /add a word/i });
-      expect(addButton).toBeInTheDocument();
-    });
-
-    it("should have a button to start learning", () => {
-      const startButton = screen.getByRole("button", {
-        name: /start learning/i,
+    it("should have a link to redirect to add a card", () => {
+      const linkToAddACard = screen.getByRole("link", {
+        name: "link to add a card",
       });
-      expect(startButton).toBeInTheDocument();
+      expect(linkToAddACard).toBeInTheDocument();
     });
 
-    it("should have a button to show the learned words", () => {
-      const learnedWordsButton = screen.getByRole("button", {
-        name: /shows the learned words/i,
+    it("should have a link to redirect to start learn", () => {
+      const linkToStartLearn = screen.getByRole("link", {
+        name: "link to start learn",
       });
-      expect(learnedWordsButton).toBeInTheDocument();
+      expect(linkToStartLearn).toBeInTheDocument();
     });
 
-    it("should have a button to show the words to learn", () => {
-      const toLearnButton = screen.getByRole("button", {
-        name: /shows the words to learn/i,
+    it("should have a link to redirect to the learned list", () => {
+      const linkToLearnedList = screen.getByRole("link", {
+        name: "link to the learned list",
       });
-      expect(toLearnButton).toBeInTheDocument();
+      expect(linkToLearnedList).toBeInTheDocument();
     });
 
-    afterEach(() => {
-      jest.clearAllMocks();
+    it("should have a link to redirect to the learning list", () => {
+      const linkToTheListToLearn = screen.getByRole("link", {
+        name: "link to the learning list",
+      });
+      expect(linkToTheListToLearn).toBeInTheDocument();
     });
   });
 
   describe("check the button's click functionality to change the path", () => {
-    const mockPush = jest.fn();
-
-    beforeEach(() => {
-      (useRouter as jest.Mock).mockReturnValue({
-        push: mockPush,
+    it("should check that the link has the correct attribute to add a card", async () => {
+      const linkToAddACard = screen.getByRole("link", {
+        name: "link to add a card",
       });
-
-      render(<Navigator />);
+      expect(linkToAddACard).toHaveAttribute("href", Routes.ADD);
     });
 
-    it("clicks the button to add a word", async () => {
-      const addButton = screen.getByRole("button", { name: /add a word/i });
-      await userEvent.click(addButton);
-      expect(mockPush).toHaveBeenCalledWith(Routes.ADD);
+    it("should check that the link has the correct attribute to start learn", async () => {
+      const linkToStartLearn = screen.getByRole("link", {
+        name: "link to start learn",
+      });
+      expect(linkToStartLearn).toHaveAttribute("href", Routes.LEARN);
     });
 
-    it("clicks the button to start learning", async () => {
-      const startButton = screen.getByRole("button", {
-        name: /start learning/i,
+    it("should check that the link has the correct attribute to show the learned words", async () => {
+      const linkToLearnedList = screen.getByRole("link", {
+        name: "link to the learned list",
       });
-      await userEvent.click(startButton);
-      expect(mockPush).toHaveBeenCalledWith(Routes.LEARN);
+      expect(linkToLearnedList).toHaveAttribute("href", Routes.LEARNED);
     });
 
-    it("clicks the button to show the learned words", async () => {
-      const learnedWordsButton = screen.getByRole("button", {
-        name: /shows the learned words/i,
+    it("should check that the link has the correct attribute to show the words to learn", async () => {
+      const linkToTheListToLearn = screen.getByRole("link", {
+        name: "link to the learning list",
       });
-      await userEvent.click(learnedWordsButton);
-      expect(mockPush).toHaveBeenCalledWith(Routes.LEARNED_WORDS);
-    });
-
-    it("clicks the button to show the words to learn", async () => {
-      const toLearnButton = screen.getByRole("button", {
-        name: /shows the words to learn/i,
-      });
-      await userEvent.click(toLearnButton);
-      expect(mockPush).toHaveBeenCalledWith(Routes.WORDS_TO_LEARN);
+      expect(linkToTheListToLearn).toHaveAttribute("href", Routes.TO_LEARN);
     });
   });
 });

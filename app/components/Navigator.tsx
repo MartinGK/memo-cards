@@ -1,50 +1,45 @@
-'use client'
+"use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { VscDebugStart } from "react-icons/vsc";
 import { GoChecklist } from "react-icons/go";
 import { TbListSearch } from "react-icons/tb";
 import { Routes } from "../utils/routes";
+import Link from "next/link";
 
 export default function Navigator() {
-  const { push } = useRouter();
-
-  const redirect = (to: Routes) => {
-    push(to);
-  };
 
   return (
     <nav aria-label="navigator" role="navigator">
       <ul>
-        <li>
-          <button onClick={() => redirect(Routes.ADD)} aria-label="add a word">
+        <Link href={Routes.ADD} aria-label="link to add a card">
+          <li>
             <FaPlus />
-          </button>
-        </li>
+          </li>
+        </Link>
         <li>
-          <button
-            onClick={() => redirect(Routes.LEARN)}
-            aria-label="start learning"
+          <Link
+            href={Routes.LEARN}
+            aria-label="link to start learn"
           >
             <VscDebugStart />
-          </button>
+          </Link>
         </li>
         <li>
-          <button
-            onClick={() => redirect(Routes.LEARNED_WORDS)}
-            aria-label="shows the learned words"
+          <Link
+            href={Routes.LEARNED}
+            aria-label="link to the learned list"
           >
             <GoChecklist />
-          </button>
+          </Link>
         </li>
         <li>
-          <button
-            onClick={() => redirect(Routes.WORDS_TO_LEARN)}
-            aria-label="shows the words to learn"
+          <Link
+            href={Routes.TO_LEARN}
+            aria-label= "link to the learning list"
           >
             <TbListSearch />
-          </button>
+          </Link>
         </li>
       </ul>
     </nav>

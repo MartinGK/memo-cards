@@ -5,6 +5,7 @@ const config: Config = {
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: ["./jest.setup.ts"]
 };
 
