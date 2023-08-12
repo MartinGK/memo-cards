@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import {
 TIME_TO_DISAPPEAR_CARD,
 TIME_TO_APPEAR_CARD
-} from "../utils/constants";
+} from "../../utils/constants";
 
 export const expectCardToBeNullAfterAnimation = () => {
   fakeTimersToCallACallback(() => {

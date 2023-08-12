@@ -1,14 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import Learn from "../../pages/Learn";
+import Learn from "../../Learn/page";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   mockGlobalStorage,
   expectCardToBeNullAfterAnimation,
   expectToTransitionToNextCard,
-} from "../testUtils";
+} from "../utils/testUtils";
 
 const relationsToLearnArrayFromLocalStorage = [
   {
@@ -50,7 +50,7 @@ describe("Learn Page", () => {
   });
 
   it("should exists a card", () => {
-    const card = screen.getByRole("card");
+    const card = screen.getByRole("card", { name: "card" });
     expect(card).toBeInTheDocument();
   });
 
@@ -61,7 +61,7 @@ describe("Learn Page", () => {
 
   describe("situations when the card is flipped", () => {
     beforeEach(async () => {
-      const card = screen.getByRole("card");
+      const card = screen.getByRole("card", { name: "card" });
       await userEvent.click(card);
     });
 
@@ -115,7 +115,7 @@ describe("Learn Page", () => {
       });
 
       it("should call addWordToLearnedList", () => {
-        const addWordToLearnedList = jest.fn()
+        const addWordToLearnedList = jest.fn();
         // this will be a mock for the zustand store
         expect(addWordToLearnedList).toHaveBeenCalled();
       });

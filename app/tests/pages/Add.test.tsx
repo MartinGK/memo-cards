@@ -1,7 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-import Add from "../../pages/Add";
+import Add from "../../Add/page";
 import { render, screen } from "@testing-library/react";
 
 describe("Add page", () => {
@@ -10,12 +7,16 @@ describe("Add page", () => {
   });
 
   it("should exists an Add container", () => {
-    const addContainer = screen.getByRole("add-container");
+    const addContainer = screen.getByRole("container", {
+      name: "add-container",
+    });
     expect(addContainer).toBeInTheDocument();
   });
 
   it("should exists a card", () => {
-    const card = screen.getByRole("card");
+    const card = screen.getByRole("card", {
+      name: "card",
+    });
     expect(card).toBeInTheDocument();
   });
 });

@@ -1,10 +1,5 @@
-import Header from './components/Header'
-import Layout from './layout';
+import Learn from "./Learn/page";
 
 export default function Home() {
-  return (
-    <Layout>
-      <Header/>
-    </Layout>
-  )
+  return <Learn />;
 }

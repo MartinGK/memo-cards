@@ -6,42 +6,49 @@ import { GoChecklist } from "react-icons/go";
 import { TbListSearch } from "react-icons/tb";
 import { Routes } from "../utils/routes";
 import Link from "next/link";
+import { styled } from "styled-components";
+
+const StyledNav = styled.nav`
+  ul {
+    display: flex;
+    color: black;
+    color: white;
+    align-self: center;
+    font-size: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      padding-left: 2rem;
+    }
+  }
+`;
 
 export default function Navigator() {
-
   return (
-    <nav aria-label="navigator" role="navigator">
+    <StyledNav aria-label="navigator" role="navigator">
       <ul>
-        <Link href={Routes.ADD} aria-label="link to add a card">
-          <li>
-            <FaPlus />
-          </li>
-        </Link>
         <li>
-          <Link
-            href={Routes.LEARN}
-            aria-label="link to start learn"
-          >
+          <Link href={Routes.ADD} aria-label="link to add a card">
+            <FaPlus />
+          </Link>
+        </li>
+        <li>
+          <Link href={Routes.LEARN} aria-label="link to start learn">
             <VscDebugStart />
           </Link>
         </li>
         <li>
-          <Link
-            href={Routes.LEARNED}
-            aria-label="link to the learned list"
-          >
+          <Link href={Routes.LEARNED} aria-label="link to the learned list">
             <GoChecklist />
           </Link>
         </li>
         <li>
-          <Link
-            href={Routes.TO_LEARN}
-            aria-label= "link to the learning list"
-          >
+          <Link href={Routes.TO_LEARN} aria-label="link to the learning list">
             <TbListSearch />
           </Link>
         </li>
       </ul>
-    </nav>
+    </StyledNav>
   );
 }

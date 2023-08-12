@@ -2,10 +2,17 @@ import type { Config } from "jest";
 
 const config: Config = {
   verbose: true,
+  preset: "ts-jest",
   transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+    "^.+\\.(ts|tsx)?$": [
+      "ts-jest",
+      {
+        tsconfig: "./tsconfig.test.json"
+      },
+    ],
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
-  testEnvironment: "jsdom",
+  testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["./jest.setup.ts"]
 };
 

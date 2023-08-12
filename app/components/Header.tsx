@@ -1,11 +1,18 @@
-import React from "react";
+"use client";
 import Navigator from "../components/Navigator";
+import styled from "styled-components";
+
+const StyledHeader = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default function Header() {
   return (
-    <header role="header" aria-label="header">
-      <h1>Welcome</h1>
+    <StyledHeader role="StyledHeader" aria-label="header">
+      <h1>Welcome!</h1>
       <Navigator />
-    </header>
+    </StyledHeader>
   );
 }

@@ -4,7 +4,7 @@ import CardWordsToRelate from "../components/CardRelationToLearn";
 import {
   expectCardToBeNullAfterAnimation,
   mockGlobalStorage,
-} from "./testUtils";
+} from "./utils/testUtils";
 
 const CardWordsToRelateValues = {
   toRelate: "word",
@@ -19,7 +19,7 @@ describe("CardWordsToRelate component", () => {
   });
 
   it("should exists a card", () => {
-    const card = screen.getByRole("card");
+    const card = screen.getByRole("card", { name: "card" });
     expect(card).toBeInTheDocument();
   });
 
@@ -30,7 +30,7 @@ describe("CardWordsToRelate component", () => {
 
   describe("events when the card is clicked", () => {
     beforeEach(async () => {
-      const card = screen.getByRole("card");
+    const card = screen.getByRole("card", { name: "card" });
       await userEvent.click(card);
     });
 
