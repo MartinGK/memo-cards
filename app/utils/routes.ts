@@ -1,6 +1,6 @@
 export enum Routes {
-  ADD = "/Add",
   LEARN = "/Learn",
+  ADD = "/Add",
   LEARNED = "/Learned",
   TO_LEARN = "/To-learn",
 }

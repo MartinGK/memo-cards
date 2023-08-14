@@ -68,7 +68,11 @@ export default function CardAddNewRelation() {
       setIsCardFlipped(true);
       if (cardRef.current) cardRef.current.style.transform = "rotateY(180deg)";
 
-      if (backCardTextareaRef.current) backCardTextareaRef.current.focus();
+      if (backCardTextareaRef.current) {
+        backCardTextareaRef.current.focus();
+        backCardTextareaRef.current.selectionEnd = 0;
+        backCardTextareaRef.current.selectionStart = 0;
+      }
     }
   };
 
