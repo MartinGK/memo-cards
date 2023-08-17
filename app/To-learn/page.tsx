@@ -1,9 +1,9 @@
-import Layout from "../layout";
+import Section from "../layouts/sectionLayout";
 
 export default function ToLearn() {
   return (
-    <Layout>
+    <Section>
       <div>ToLearn</div>
-    </Layout>
+    </Section>
   );
 }

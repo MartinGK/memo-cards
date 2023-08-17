@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CardAddNewRelation from "../components/CardAddNewRelation";
 import {
@@ -12,14 +12,24 @@ import {
   TIME_TO_SHOW_PRESS_ENTER_MESSAGE,
 } from "../utils/constants";
 
-const CardWordsToRelateValues = {
-  toRelate: "word",
-  relation: "relation",
+export const typeOnRelationToRelateTextarea = async (text: string) => {
+  await typeOnTextareaInput(text, "relation-to-relate");
+};
+
+export const typeOnRelationToLearnTextarea = async (text: string) => {
+  await typeOnTextareaInput(text, "relation-to-learn");
+};
+
+const typeOnTextareaInput = async (text: string, inputRoleName: string) => {
+  const textareaInput = screen.getByRole("input", {
+    name: inputRoleName,
+  });
+  await userEvent.type(textareaInput, text);
 };
 
 const { localStorageMock } = mockGlobalStorage({});
 
-describe("CardAddNewRelation component", () => {
+describe("CardAddNewRelation happy path", () => {
   beforeEach(() => {
     render(<CardAddNewRelation />);
   });
@@ -51,11 +61,11 @@ describe("CardAddNewRelation component", () => {
   describe("events when the input is filled", () => {
     const newRelationToAdd = "relation one";
 
-    beforeEach(() => {
+    beforeEach(async () => {
       const relationToLearnInput = screen.getByRole("input", {
         name: "relation-to-relate",
       });
-      userEvent.type(relationToLearnInput, newRelationToAdd);
+      await userEvent.type(relationToLearnInput, newRelationToAdd);
     });
 
     it("should fill the input", () => {
@@ -78,18 +88,20 @@ describe("CardAddNewRelation component", () => {
     });
 
     describe("events when enter is pressed", () => {
-      it("should flip the card", () => {
-        const cardFlipped = screen.getByRole("card", {name: "card-back"});
-        expect(cardFlipped).toBeInTheDocument();
+      it("should add the rotateY(180deg) to the card style", () => {
+        const card = screen.getByRole("card", { name: "card" });
+        expect(card.style.transform).toBe("rotateY(180deg)");
       });
 
+      //this not a good test because the flip button is always in the screen
       it("should appear a back button to flip back", () => {
-        const relationInput = screen.getByRole("button", {
+        const flipBackButton = screen.getByRole("button", {
           name: "flip-back",
         });
-        expect(relationInput).toBeInTheDocument();
+        expect(flipBackButton).toBeInTheDocument();
       });
 
+      //this not a good test because the relationInput is always in the screen
       it("should appear the 'relation' input the card", () => {
         const relationInput = screen.getByRole("input", {
           name: "relation-to-learn",
@@ -106,7 +118,7 @@ describe("CardAddNewRelation component", () => {
 
       describe("events when the user start typing", () => {
         const relation = "new relation";
-        beforeEach(() => {
+        beforeAll(() => {
           const relationInput = screen.getByRole("input", {
             name: "relation-to-learn",
           });
@@ -123,16 +135,6 @@ describe("CardAddNewRelation component", () => {
             const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
             expect(pressEnterPopup).toBeInTheDocument();
           }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
-        });
-
-        it("should add the breakpoint to the textarea and the user can type", async () => {
-          const testWordToAdd = "test";
-          const relationInput = screen.getByRole("input", {
-            name: "relation-to-learn",
-          });
-          await userEvent.type(relationInput, "{shift}{enter}");
-          await userEvent.type(relationInput, testWordToAdd);
-          expect(relationInput).toHaveValue(`${relation}\n${testWordToAdd}`);
         });
 
         describe("events when enter is pressed", () => {
@@ -158,6 +160,117 @@ describe("CardAddNewRelation component", () => {
           });
         });
       });
+    });
+  });
+});
+
+describe("CardAddNewRelation boundaries", () => {
+  describe("front side", () => {
+    beforeEach(() => {
+      render(<CardAddNewRelation />);
+    });
+
+    it("shouldn't let you type more than 3 starts", async () => {
+      const testText = "hello world\n\n\n\na";
+      await typeOnRelationToRelateTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-relate",
+      });
+      const lastNewLineIndex = testText.lastIndexOf("\n");
+      const theValueThatTheTextareaShouldHave =
+        testText.slice(0, lastNewLineIndex) +
+        testText.slice(lastNewLineIndex + 1);
+      expect(textarea).toHaveValue(theValueThatTheTextareaShouldHave);
+    });
+
+    it("should let you type 3 starts", async () => {
+      const testText = "hello world\n\n\na";
+      await typeOnRelationToRelateTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-relate",
+      });
+      expect(textarea).toHaveValue(testText);
+    });
+
+    it("should limit the amount of word based on the number of characters", async () => {
+      const testText = "hello world\n\n\n\naaaaaaaaaaaaaaaaaaaaaa";
+      const previousTextarea = screen.getByRole("input", {
+        name: "relation-to-relate",
+      });
+      await typeOnRelationToLearnTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-relate",
+      });
+      expect(previousTextarea).toBe(textarea.scrollHeight);
+    });
+  });
+
+  describe("back side", () => {
+    beforeEach(async () => {
+      render(<CardAddNewRelation />);
+      const testText = "go next side";
+      await typeOnRelationToRelateTextarea(testText);
+      await typeOnRelationToRelateTextarea("start");
+    });
+
+    it("shouldn't let you type more than 3 starts", async () => {
+      const testText = "hello world\n\n\n\na";
+      await typeOnRelationToLearnTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-learn",
+      });
+      const lastNewLineIndex = testText.lastIndexOf("\n");
+      const theValueThatTheTextareaShouldHave =
+        testText.slice(0, lastNewLineIndex) +
+        testText.slice(lastNewLineIndex + 1);
+      expect(textarea).toHaveValue(theValueThatTheTextareaShouldHave);
+    });
+
+    it("should add the breakpoint when the user type shift + enter", async () => {
+      const relationInput = screen.getByRole("input", {
+        name: "relation-to-learn",
+      });
+      const testWord = "test1";
+      await userEvent.type(relationInput, testWord);
+      await userEvent.type(relationInput, "{shift}{enter}");
+      const testWordToAdd = "test2";
+      await userEvent.type(relationInput, testWordToAdd);
+      expect(relationInput).toHaveValue(`${testWord}\n${testWordToAdd}`);
+    });
+
+    it("should't let you type more than 3 starts", async () => {
+      const testText = "hello world\n\n\n\na";
+      await typeOnRelationToLearnTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-learn",
+      });
+      const lastNewLineIndex = testText.lastIndexOf("\n");
+      const theValueThatTheTextareaShouldHave =
+        testText.slice(0, lastNewLineIndex) +
+        testText.slice(lastNewLineIndex + 1);
+      expect(textarea).toHaveValue(theValueThatTheTextareaShouldHave);
+    });
+
+    it("should let you type 3 starts", async () => {
+      const testText = "hello world\n\n\na";
+      await typeOnRelationToLearnTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-learn",
+      });
+      expect(textarea).toHaveValue(testText);
+    });
+
+    it("should limit the amount of word based on their scroll height", async () => {
+      const testText = "hello world\n\n\n\naaaaaaaaaaaaaaaaaaaaaa";
+      const previousTextarea = screen.getByRole("input", {
+        name: "relation-to-learn",
+      });
+      await typeOnRelationToLearnTextarea(testText);
+      const textarea = screen.getByRole("input", {
+        name: "relation-to-learn",
+      });
+      //idk if previous is affected
+      expect(previousTextarea.scrollHeight).toBe(textarea.scrollHeight);
     });
   });
 });

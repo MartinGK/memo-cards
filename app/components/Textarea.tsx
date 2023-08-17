@@ -30,12 +30,6 @@ const StyledTextarea = styled.textarea`
   }
 `;
 
-const locateCaretAtTheEnd = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-  const len = event.target.value.length;
-  event.target.selectionStart = len;
-  event.target.selectionEnd = len;
-}
-
 const Textarea = React.forwardRef(
   (props: TextareaProps, ref?: React.ForwardedRef<HTMLTextAreaElement>) => {
     return (
@@ -46,7 +40,6 @@ const Textarea = React.forwardRef(
         wrap="hard"
         maxLength={90}
         autoFocus
-        onFocus={locateCaretAtTheEnd}
         aria-label="textarea"
         {...props}
       />

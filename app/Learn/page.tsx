@@ -1,12 +1,12 @@
-import CardWordsToRelate from '../components/CardRelationToLearn'
-import NothingMoreToLearn from '../components/NothingMoreToLearnMessage'
-import Layout from "../layout";
+import CardWordsToRelate from "../components/CardRelationToLearn";
+import NothingMoreToLearn from "../components/NothingMoreToLearnMessage";
+import Section from "../layouts/sectionLayout";
 
 export default function Learn() {
   return (
-    <Layout>
-        <CardWordsToRelate />
-        <NothingMoreToLearn />
-    </Layout>
-  )
+    <Section>
+      <CardWordsToRelate />
+      <NothingMoreToLearn />
+    </Section>
+  );
 }
