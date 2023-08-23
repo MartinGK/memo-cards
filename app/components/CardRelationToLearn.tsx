@@ -1,10 +1,12 @@
-import React from 'react'
-import Card from './FlipCard'
+import FlipCard from "./FlipCard";
 
-type Props = {}
+type Props = {};
 
 export default function CardRelationToLearn({}: Props) {
   return (
-    <Card><span>CardRelationToLearn</span></Card>
-  )
+    <FlipCard
+      frontContent={<span>CardRelationToLearn</span>}
+      backContent={<span>CardRelationToLearn</span>}
+    />
+  );
 }

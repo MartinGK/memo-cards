@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Textarea from "../components/Textarea";
+import Textarea from "../app/components/Textarea";
+import { fireEventOnChangeInInputValue } from "./utils/testUtils";
 
-export const typeOnTextarea = async (text: string) => {
+export const typeOnTextarea = (text: string) => {
   const textarea = screen.getByRole("input", { name: "textarea" });
-  await userEvent.type(textarea, text);
+  fireEventOnChangeInInputValue(textarea, text);
 };
 
 describe("Textarea component", () => {
@@ -18,9 +19,9 @@ describe("Textarea component", () => {
   });
 
   describe("when the user is typing", () => {
-    it("should type correctly", async () => {
+    it("should type correctly", () => {
       const testText = "hello world";
-      await typeOnTextarea(testText);
+      typeOnTextarea(testText);
       const textarea = screen.getByRole("input", { name: "textarea" });
       expect(textarea).toHaveValue(testText);
     });

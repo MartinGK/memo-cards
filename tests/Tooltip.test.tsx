@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
-import Tooltip from "../components/Tooltip"
+import Tooltip from "../app/components/Tooltip"
 import userEvent from "@testing-library/user-event";
-import { PRESS_ENTER_MESSAGE } from "../utils/constants"
+import { PRESS_ENTER_MESSAGE } from "../app/utils/constants"
 
 
 describe("Tooltip component", ()=>{

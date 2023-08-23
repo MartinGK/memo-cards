@@ -2,11 +2,11 @@ import { fireEvent, screen } from "@testing-library/react";
 import {
   TIME_TO_DISAPPEAR_CARD,
   TIME_TO_APPEAR_CARD,
-} from "../../utils/constants";
+} from "../../app/utils/constants";
 
 export const expectCardToBeNullAfterAnimation = () => {
   fakeTimersToCallACallback(() => {
-    const card = screen.getByRole("card");
+    const card = screen.getByRole("card", { name: "flip-card" });
     expect(card).toBe(null);
   }, TIME_TO_DISAPPEAR_CARD);
 };

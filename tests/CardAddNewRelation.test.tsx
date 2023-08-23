@@ -1,9 +1,8 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import CardAddNewRelation from "../components/CardAddNewRelation";
+import CardAddNewRelation from "../app/components/CardAddNewRelation";
 import {
   expectCardToBeNullAfterAnimation,
   expectToTransitionToNextCard,
-  fakeTimersToCallACallback,
   fireEventOnChangeInInputValue,
   mockGlobalStorage,
   pressEnterOnInput,
@@ -11,8 +10,8 @@ import {
 import {
   CARD_TEXTAREA_MAX_CHARACTERS,
   PRESS_ENTER_MESSAGE,
-  TIME_TO_SHOW_PRESS_ENTER_MESSAGE,
-} from "../utils/constants";
+} from "../app/utils/constants";
+import { act } from "react-dom/test-utils";
 
 export const typeOnRelationToRelateTextarea = (text: string) => {
   typeOnTextareaInput(text, "relation-to-relate");
@@ -44,7 +43,7 @@ describe("CardAddNewRelation", () => {
 
     it("should exists a card", () => {
       expect.assertions(1);
-      const card = screen.getByRole("card", { name: "card" });
+      const card = screen.getByRole("card", { name: "flip-card" });
       return expect(card).toBeInTheDocument();
     });
 
@@ -88,20 +87,18 @@ describe("CardAddNewRelation", () => {
         expect(pressEnterPopup).toBe(null);
       });
 
-      it("should appear the press enter message after an specific time", async () => {
-        const ClickMe = screen.getByText("ClickMe");
-        fireEvent.click(ClickMe);
-        jest.runAllTimers();
+      it("should appear the press enter message after the user type", async () => {
         const relationToRelateInput = screen.getByRole("input", {
           name: "relation-to-relate",
         });
-        fireEvent.keyUp(relationToRelateInput, { key: "A", code: "KeyA" });
-        jest.runAllTimers();
+
+        act(() => {
+          fireEvent.keyDown(relationToRelateInput, { key: "A", code: "KeyA" });
+          jest.runAllTimers();
+        });
 
         const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
         expect(pressEnterPopup).toBeInTheDocument();
-        // fakeTimersToCallACallback(() => {
-        // }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
       });
 
       describe("when enter is pressed", () => {
@@ -113,7 +110,7 @@ describe("CardAddNewRelation", () => {
         });
 
         it("should add the rotateY(180deg) to the card style", () => {
-          const card = screen.getByRole("card", { name: "card" });
+          const card = screen.getByRole("card", { name: "flip-card" });
           expect(card.style.transform).toBe("rotateY(180deg)");
         });
 
@@ -127,34 +124,34 @@ describe("CardAddNewRelation", () => {
 
         //this not a good test because the relationInput is always in the screen
         it("should appear the 'relation-to-learn' input the card", () => {
-          const relationInput = screen.getByRole("input", {
+          const relationToLearnInput = screen.getByRole("input", {
             name: "relation-to-learn",
           });
-          expect(relationInput).toBeInTheDocument();
+          expect(relationToLearnInput).toBeInTheDocument();
         });
 
         it("should focus the user on the textbox input", () => {
-          const relationInput = screen.getByRole("input", {
+          const relationToLearnInput = screen.getByRole("input", {
             name: "relation-to-learn",
           });
-          expect(relationInput).toHaveFocus();
+          expect(relationToLearnInput).toHaveFocus();
         });
 
         describe("when the user start typing in the relation-to-learn input", () => {
           const relation = "new relation";
 
           beforeEach(() => {
-            const relationInput = screen.getByRole("input", {
+            const relationToLearnInput = screen.getByRole("input", {
               name: "relation-to-learn",
             });
-            fireEventOnChangeInInputValue(relationInput, relation);
+            fireEventOnChangeInInputValue(relationToLearnInput, relation);
           });
 
           it("should fill the input", () => {
-            const relationToRelateInput = screen.getByRole("input", {
+            const relationToLearnInput = screen.getByRole("input", {
               name: "relation-to-learn",
             });
-            expect(relationToRelateInput).toHaveValue(relation);
+            expect(relationToLearnInput).toHaveValue(relation);
           });
 
           it("shouldn't appear the press enter message", () => {
@@ -162,18 +159,28 @@ describe("CardAddNewRelation", () => {
             expect(pressEnterPopup).toBe(null);
           });
 
-          it("should appear the press enter message after an specific time", () => {
-            fakeTimersToCallACallback(() => {
-              const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
-              expect(pressEnterPopup).toBeInTheDocument();
-            }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
+          it("should appear the press enter message after the user type", () => {
+            const relationToLearnInput = screen.getByRole("input", {
+              name: "relation-to-learn",
+            });
+
+            act(() => {
+              fireEvent.keyDown(relationToLearnInput, {
+                key: "A",
+                code: "KeyA",
+              });
+              jest.runAllTimers();
+            });
+
+            const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
+            expect(pressEnterPopup).toBeInTheDocument();
           });
 
           describe("when enter is pressed", () => {
-            it.skip("should add the relation to the localStorage", () => {
+            it("should add the relation to the localStorage", () => {
               expect(localStorageMock.setItem).toHaveBeenCalledWith(
                 "relationsToLearn",
-                JSON.stringify([relation])
+                JSON.stringify({ newRelationToAdd: relation })
               );
             });
 

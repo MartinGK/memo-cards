@@ -1,9 +1,9 @@
 import userEvent from "@testing-library/user-event";
 import NothingMoreToLearn, {
   NOTHING_MORE_TO_LEARN_MESSAGE,
-} from "../components/NothingMoreToLearnMessage";
+} from "../app/components/NothingMoreToLearnMessage";
 import { render, screen } from "@testing-library/react";
-import { Routes } from "../utils/routes";
+import { Routes } from "../app/utils/routes";
 
 
 describe("CardWordsToRelate component", () => {

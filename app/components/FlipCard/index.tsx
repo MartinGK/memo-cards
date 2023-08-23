@@ -83,7 +83,7 @@ const StyledArrowLeft = styled(FaArrowLeft)`
 
 /**
  *
- * @param cardDiv It should be cardRef.current
+ * @param cardDiv It should be flipCardRef.current
  */
 export const flipCard = (cardDiv: HTMLDivElement | null) => {
   if (cardDiv) cardDiv.style.transform = "rotateY(180deg)";

@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const StyledMain = styled.main`
+const StyledMain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

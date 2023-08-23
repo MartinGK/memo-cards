@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 // import { Inter } from 'next/font/google'
 import Header from "./components/Header";
-import Body from "./components/Body";
 import Main from "./components/Main";
 import StyledComponentsRegistry from "./lib/registry";
 import BodyWithBackground from "./components/BodyWithBackground";
@@ -20,14 +19,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <StyledComponentsRegistry>
-        <Main>
+      <Main>
+        <StyledComponentsRegistry>
           <BodyWithBackground>
             <Header />
             {children}
           </BodyWithBackground>
-        </Main>
-      </StyledComponentsRegistry>
+        </StyledComponentsRegistry>
+      </Main>
     </html>
   );
 }

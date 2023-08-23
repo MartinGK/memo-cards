@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 import { render, screen } from "@testing-library/react";
-import Navigator from "../components/Navigator";
-import { Routes } from "../utils/routes";
+import Navigator from "../app/components/Navigator";
+import { Routes } from "../app/utils/routes";
 
 describe("Navigator component", () => {
   beforeEach(() => {

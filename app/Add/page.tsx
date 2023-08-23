@@ -1,7 +1,7 @@
 "use client";
 import CardAddNewRelation from "../components/CardAddNewRelation";
+import SectionLayout from "../layouts/sectionLayout";
 import styled from "styled-components";
-import Section from "../layouts/sectionLayout";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -13,10 +13,10 @@ const StyledContainer = styled.div`
 
 export default function Add() {
   return (
-    <Section>
+    <SectionLayout>
       <StyledContainer role="container" aria-label="add-container">
         <CardAddNewRelation />
       </StyledContainer>
-    </Section>
+    </SectionLayout>
   );
 }

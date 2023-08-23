@@ -1,4 +1,4 @@
-import Add from "../../Add/page";
+import Add from "../../app/Add/page";
 import { render, screen } from "@testing-library/react";
 
 describe("Add page", () => {
@@ -13,9 +13,9 @@ describe("Add page", () => {
     expect(addContainer).toBeInTheDocument();
   });
 
-  it("should exists a card", () => {
+  it("should exists a flip card", () => {
     const card = screen.getByRole("card", {
-      name: "card",
+      name: "flip-card",
     });
     expect(card).toBeInTheDocument();
   });

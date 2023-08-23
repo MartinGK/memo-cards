@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import FlipCard, { flipCard } from "../components/FlipCard";
+import FlipCard, { flipCard } from "../app/components/FlipCard";
 
 describe("FlipCard component", () => {
   it("renders without crashing", () => {

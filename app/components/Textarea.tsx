@@ -3,8 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {
   CARD_TEXTAREA_MAX_CHARACTERS,
+  PRESS_ENTER_MESSAGE,
   TIME_TO_SHOW_PRESS_ENTER_MESSAGE,
 } from "../utils/constants";
+import Tooltip from "./Tooltip";
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
@@ -36,7 +38,6 @@ const StyledTextarea = styled.textarea`
 
 const Textarea = React.forwardRef(
   (props: TextareaProps, ref?: React.ForwardedRef<HTMLTextAreaElement>) => {
-    const [maxHeightForTextarea, setMaxHeightForTextarea] = useState(0);
     const [showPressStartMessage, setShowPressStartMessage] = useState(false);
     const pressStartMessageRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -47,11 +48,10 @@ const Textarea = React.forwardRef(
       }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
     };
 
-    const adjustHeightAndLimitMaxCharacters = (
+    const limitMaxCharacters = (
       event: React.FormEvent<HTMLTextAreaElement>
     ) => {
       const textarea = event.currentTarget;
-      adjustTextareaHeight(textarea);
       limitMaxTextareaCharacters(textarea);
     };
 
@@ -61,15 +61,10 @@ const Textarea = React.forwardRef(
       }
     };
 
-    const adjustTextareaHeight = (textarea: HTMLTextAreaElement) => {
-      textarea.style.height = "auto";
-      if (maxHeightForTextarea > textarea.scrollHeight) {
-        textarea.style.height = `${maxHeightForTextarea}px`;
-      }
-    };
-
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === "Enter") {
+        if (pressStartMessageRef.current)
+          clearTimeout(pressStartMessageRef.current);
         setShowPressStartMessage(false);
       } else {
         setTimerToShowPressEnterMessage();
@@ -86,7 +81,7 @@ const Textarea = React.forwardRef(
     };
 
     const onInput = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      adjustHeightAndLimitMaxCharacters(event);
+      limitMaxCharacters(event);
       if (props.onFocus) props.onFocus(event);
     };
 
@@ -104,19 +99,22 @@ const Textarea = React.forwardRef(
     }, []);
 
     return (
-      <StyledTextarea
-        ref={ref}
-        role="input"
-        rows={5}
-        wrap="hard"
-        maxLength={90}
-        autoFocus
-        aria-label="textarea"
-        {...props}
-        onFocus={onFocus}
-        onInput={onInput}
-        onKeyDown={onKeyDown}
-      />
+      <>
+        <Tooltip message={PRESS_ENTER_MESSAGE} isOpen={showPressStartMessage} />
+        <StyledTextarea
+          ref={ref}
+          role="input"
+          rows={5}
+          wrap="hard"
+          maxLength={90}
+          autoFocus
+          aria-label="textarea"
+          {...props}
+          onFocus={onFocus}
+          onInput={onInput}
+          onKeyDown={onKeyDown}
+        />
+      </>
     );
   }
 );

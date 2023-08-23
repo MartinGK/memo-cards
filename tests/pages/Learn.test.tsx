@@ -1,14 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import Learn from "../../Learn/page";
+import Learn from "../../app/Learn/page";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   mockGlobalStorage,
   expectCardToBeNullAfterAnimation,
   expectToTransitionToNextCard,
-} from "../utils/testUtils";
+} from "../app/utils/testUtils";
 
 const relationsToLearnArrayFromLocalStorage = [
   {
