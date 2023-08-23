@@ -15,8 +15,6 @@ const StyledBody = styled.body`
   width: 100vw;
   height: 100vh;
   margin: 0px;
-  display: flex;
-  flex-direction: column;
 `;
 
 export default function Body({ children }: Props) {

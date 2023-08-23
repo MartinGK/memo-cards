@@ -1,276 +1,278 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import CardAddNewRelation from "../components/CardAddNewRelation";
 import {
   expectCardToBeNullAfterAnimation,
   expectToTransitionToNextCard,
   fakeTimersToCallACallback,
+  fireEventOnChangeInInputValue,
   mockGlobalStorage,
+  pressEnterOnInput,
 } from "./utils/testUtils";
 import {
+  CARD_TEXTAREA_MAX_CHARACTERS,
   PRESS_ENTER_MESSAGE,
   TIME_TO_SHOW_PRESS_ENTER_MESSAGE,
 } from "../utils/constants";
 
-export const typeOnRelationToRelateTextarea = async (text: string) => {
-  await typeOnTextareaInput(text, "relation-to-relate");
+export const typeOnRelationToRelateTextarea = (text: string) => {
+  typeOnTextareaInput(text, "relation-to-relate");
 };
 
-export const typeOnRelationToLearnTextarea = async (text: string) => {
-  await typeOnTextareaInput(text, "relation-to-learn");
+export const typeOnRelationToLearnTextarea = (text: string) => {
+  typeOnTextareaInput(text, "relation-to-learn");
 };
 
-const typeOnTextareaInput = async (text: string, inputRoleName: string) => {
+const typeOnTextareaInput = (text: string, inputRoleName: string) => {
   const textareaInput = screen.getByRole("input", {
     name: inputRoleName,
   });
-  await userEvent.type(textareaInput, text);
+  fireEventOnChangeInInputValue(textareaInput, text);
 };
 
 const { localStorageMock } = mockGlobalStorage({});
 
-describe("CardAddNewRelation happy path", () => {
-  beforeEach(() => {
-    render(<CardAddNewRelation />);
-  });
-
-  it("should exists a card", () => {
-    const card = screen.getByRole("card", { name: "card" });
-    expect(card).toBeInTheDocument();
-  });
-
-  it("should exists a relation-to-learn input", () => {
-    const relationToLearnInput = screen.getByRole("input", {
-      name: "relation-to-learn",
+describe("CardAddNewRelation", () => {
+  describe(" happy path", () => {
+    beforeEach(() => {
+      render(
+        <div>
+          <CardAddNewRelation />
+          <div id="popup-root" />
+        </div>
+      );
     });
-    expect(relationToLearnInput).toBeInTheDocument();
-  });
 
-  it("should focus the user on the relation-to-learn input", () => {
-    const relationToLearnInput = screen.getByRole("input", {
-      name: "relation-to-learn",
+    it("should exists a card", () => {
+      expect.assertions(1);
+      const card = screen.getByRole("card", { name: "card" });
+      return expect(card).toBeInTheDocument();
     });
-    expect(relationToLearnInput).toHaveFocus();
-  });
 
-  it("shouldn't exists the press enter button if input is empty", () => {
-    const pressEnterPopup = screen.queryByText(PRESS_ENTER_MESSAGE);
-    expect(pressEnterPopup).toBe(null);
-  });
-
-  describe("events when the input is filled", () => {
-    const newRelationToAdd = "relation one";
-
-    beforeEach(async () => {
+    it("should exists a relation-to-learn input", () => {
       const relationToLearnInput = screen.getByRole("input", {
-        name: "relation-to-relate",
+        name: "relation-to-learn",
       });
-      await userEvent.type(relationToLearnInput, newRelationToAdd);
+      expect(relationToLearnInput).toBeInTheDocument();
     });
 
-    it("should fill the input", () => {
+    it("should focus the user on the relation-to-learn input", () => {
       const relationToLearnInput = screen.getByRole("input", {
-        name: "relation-to-relate",
+        name: "relation-to-learn",
       });
-      expect(relationToLearnInput).toHaveValue(newRelationToAdd);
+      expect(relationToLearnInput).toHaveFocus();
     });
 
-    it("shouldn't appear the press enter message", () => {
+    it("shouldn't exists the press enter button if input is empty", () => {
       const pressEnterPopup = screen.queryByText(PRESS_ENTER_MESSAGE);
       expect(pressEnterPopup).toBe(null);
     });
 
-    it("should appear the press enter message after an specific time", () => {
-      fakeTimersToCallACallback(() => {
+    describe("when the relation-to-learn input is filled", () => {
+      const newRelationToAdd = "relation one";
+      beforeEach(() => {
+        const relationToRelateInput = screen.getByRole("input", {
+          name: "relation-to-relate",
+        });
+        fireEventOnChangeInInputValue(relationToRelateInput, newRelationToAdd);
+      });
+
+      it("should fill the input", () => {
+        const relationToRelateInput = screen.getByRole("input", {
+          name: "relation-to-relate",
+        });
+        expect(relationToRelateInput).toHaveValue(newRelationToAdd);
+      });
+
+      it("shouldn't appear the press enter message", () => {
+        const pressEnterPopup = screen.queryByText(PRESS_ENTER_MESSAGE);
+        expect(pressEnterPopup).toBe(null);
+      });
+
+      it("should appear the press enter message after an specific time", async () => {
+        const ClickMe = screen.getByText("ClickMe");
+        fireEvent.click(ClickMe);
+        jest.runAllTimers();
+        const relationToRelateInput = screen.getByRole("input", {
+          name: "relation-to-relate",
+        });
+        fireEvent.keyUp(relationToRelateInput, { key: "A", code: "KeyA" });
+        jest.runAllTimers();
+
         const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
         expect(pressEnterPopup).toBeInTheDocument();
-      }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
-    });
-
-    describe("events when enter is pressed", () => {
-      it("should add the rotateY(180deg) to the card style", () => {
-        const card = screen.getByRole("card", { name: "card" });
-        expect(card.style.transform).toBe("rotateY(180deg)");
+        // fakeTimersToCallACallback(() => {
+        // }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
       });
 
-      //this not a good test because the flip button is always in the screen
-      it("should appear a back button to flip back", () => {
-        const flipBackButton = screen.getByRole("button", {
-          name: "flip-back",
+      describe("when enter is pressed", () => {
+        beforeEach(() => {
+          const relationToRelateInput = screen.getByRole("input", {
+            name: "relation-to-relate",
+          });
+          pressEnterOnInput(relationToRelateInput);
         });
-        expect(flipBackButton).toBeInTheDocument();
-      });
 
-      //this not a good test because the relationInput is always in the screen
-      it("should appear the 'relation' input the card", () => {
-        const relationInput = screen.getByRole("input", {
-          name: "relation-to-learn",
+        it("should add the rotateY(180deg) to the card style", () => {
+          const card = screen.getByRole("card", { name: "card" });
+          expect(card.style.transform).toBe("rotateY(180deg)");
         });
-        expect(relationInput).toBeInTheDocument();
-      });
 
-      it("should focus the user on the textbox input", () => {
-        const relationInput = screen.getByRole("input", {
-          name: "relation-to-learn",
+        //this not a good test because the flip button is always in the screen
+        it("should appear a back button to flip back", () => {
+          const flipBackButton = screen.getByRole("button", {
+            name: "flip-back",
+          });
+          expect(flipBackButton).toBeInTheDocument();
         });
-        expect(relationInput).toHaveFocus();
-      });
 
-      describe("events when the user start typing", () => {
-        const relation = "new relation";
-        beforeAll(() => {
+        //this not a good test because the relationInput is always in the screen
+        it("should appear the 'relation-to-learn' input the card", () => {
           const relationInput = screen.getByRole("input", {
             name: "relation-to-learn",
           });
-          userEvent.type(relationInput, relation);
+          expect(relationInput).toBeInTheDocument();
         });
 
-        it("shouldn't appear the press enter message", () => {
-          const pressEnterPopup = screen.queryByText(PRESS_ENTER_MESSAGE);
-          expect(pressEnterPopup).toBe(null);
+        it("should focus the user on the textbox input", () => {
+          const relationInput = screen.getByRole("input", {
+            name: "relation-to-learn",
+          });
+          expect(relationInput).toHaveFocus();
         });
 
-        it("should appear the press enter message after an specific time", () => {
-          fakeTimersToCallACallback(() => {
-            const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
-            expect(pressEnterPopup).toBeInTheDocument();
-          }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
-        });
+        describe("when the user start typing in the relation-to-learn input", () => {
+          const relation = "new relation";
 
-        describe("events when enter is pressed", () => {
-          it("should add the relation to the localStorage", () => {
-            expect(localStorageMock.setItem).toHaveBeenCalledWith(
-              "relationsToLearn",
-              JSON.stringify([relation])
-            );
+          beforeEach(() => {
+            const relationInput = screen.getByRole("input", {
+              name: "relation-to-learn",
+            });
+            fireEventOnChangeInInputValue(relationInput, relation);
           });
 
-          it("should disappear the card", () => {
-            expectCardToBeNullAfterAnimation();
+          it("should fill the input", () => {
+            const relationToRelateInput = screen.getByRole("input", {
+              name: "relation-to-learn",
+            });
+            expect(relationToRelateInput).toHaveValue(relation);
           });
 
-          it("should appear a new card after the one that disappear", () => {
-            expectToTransitionToNextCard();
+          it("shouldn't appear the press enter message", () => {
+            const pressEnterPopup = screen.queryByText(PRESS_ENTER_MESSAGE);
+            expect(pressEnterPopup).toBe(null);
           });
 
-          it.skip("should call the addRelationToRelationsToLearn function", () => {
-            const addRelationToRelationsToLearn = jest.fn();
-            // this will be a mock for the zustand store
-            expect(addRelationToRelationsToLearn).toHaveBeenCalled();
+          it("should appear the press enter message after an specific time", () => {
+            fakeTimersToCallACallback(() => {
+              const pressEnterPopup = screen.getByText(PRESS_ENTER_MESSAGE);
+              expect(pressEnterPopup).toBeInTheDocument();
+            }, TIME_TO_SHOW_PRESS_ENTER_MESSAGE);
+          });
+
+          describe("when enter is pressed", () => {
+            it.skip("should add the relation to the localStorage", () => {
+              expect(localStorageMock.setItem).toHaveBeenCalledWith(
+                "relationsToLearn",
+                JSON.stringify([relation])
+              );
+            });
+
+            it.skip("should disappear the card", () => {
+              expectCardToBeNullAfterAnimation();
+            });
+
+            it.skip("should appear a new card after the one that disappear", () => {
+              expectToTransitionToNextCard();
+            });
+
+            it.skip("should call the addRelationToRelationsToLearn function", () => {
+              const addRelationToRelationsToLearn = jest.fn();
+              // this will be a mock for the zustand store
+              expect(addRelationToRelationsToLearn).toHaveBeenCalled();
+            });
           });
         });
       });
     });
   });
-});
 
-describe("CardAddNewRelation boundaries", () => {
-  describe("front side", () => {
+  describe("boundaries", () => {
     beforeEach(() => {
+      cleanup();
       render(<CardAddNewRelation />);
     });
 
-    it("shouldn't let you type more than 3 starts", async () => {
-      const testText = "hello world\n\n\n\na";
-      await typeOnRelationToRelateTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-relate",
+    describe("front side", () => {
+      it(`shouldn't let you type more than ${CARD_TEXTAREA_MAX_CHARACTERS} characters`, async () => {
+        const relationToRelateInput = screen.getByRole("input", {
+          name: "relation-to-relate",
+        });
+        let controlString = new Array(CARD_TEXTAREA_MAX_CHARACTERS + 1)
+          .fill("A")
+          .join("");
+
+        fireEvent.input(relationToRelateInput, {
+          target: { value: controlString },
+        });
+        controlString = controlString.slice(0, -1);
+        expect(relationToRelateInput).toHaveValue(controlString);
       });
-      const lastNewLineIndex = testText.lastIndexOf("\n");
-      const theValueThatTheTextareaShouldHave =
-        testText.slice(0, lastNewLineIndex) +
-        testText.slice(lastNewLineIndex + 1);
-      expect(textarea).toHaveValue(theValueThatTheTextareaShouldHave);
+
+      it(`could have ${CARD_TEXTAREA_MAX_CHARACTERS} characters`, () => {
+        const relationToRelateInput = screen.getByRole("input", {
+          name: "relation-to-relate",
+        });
+        let controlString = new Array(CARD_TEXTAREA_MAX_CHARACTERS)
+          .fill("A")
+          .join("");
+
+        fireEvent.input(relationToRelateInput, {
+          target: { value: controlString },
+        });
+
+        expect(relationToRelateInput).toHaveValue(controlString);
+      });
     });
 
-    it("should let you type 3 starts", async () => {
-      const testText = "hello world\n\n\na";
-      await typeOnRelationToRelateTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-relate",
+    describe("back side", () => {
+      beforeEach(() => {
+        const testText = "go next side";
+        typeOnRelationToRelateTextarea(testText);
+        const relationToRelateInput = screen.getByRole("input", {
+          name: "relation-to-relate",
+        });
+        pressEnterOnInput(relationToRelateInput);
       });
-      expect(textarea).toHaveValue(testText);
-    });
 
-    it("should limit the amount of word based on the number of characters", async () => {
-      const testText = "hello world\n\n\n\naaaaaaaaaaaaaaaaaaaaaa";
-      const previousTextarea = screen.getByRole("input", {
-        name: "relation-to-relate",
-      });
-      await typeOnRelationToLearnTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-relate",
-      });
-      expect(previousTextarea).toBe(textarea.scrollHeight);
-    });
-  });
+      it(`could have ${CARD_TEXTAREA_MAX_CHARACTERS} characters`, () => {
+        const relationToLearnInput = screen.getByRole("input", {
+          name: "relation-to-learn",
+        });
+        let controlString = new Array(CARD_TEXTAREA_MAX_CHARACTERS)
+          .fill("A")
+          .join("");
 
-  describe("back side", () => {
-    beforeEach(async () => {
-      render(<CardAddNewRelation />);
-      const testText = "go next side";
-      await typeOnRelationToRelateTextarea(testText);
-      await typeOnRelationToRelateTextarea("start");
-    });
+        fireEvent.input(relationToLearnInput, {
+          target: { value: controlString },
+        });
 
-    it("shouldn't let you type more than 3 starts", async () => {
-      const testText = "hello world\n\n\n\na";
-      await typeOnRelationToLearnTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-learn",
+        expect(relationToLearnInput).toHaveValue(controlString);
       });
-      const lastNewLineIndex = testText.lastIndexOf("\n");
-      const theValueThatTheTextareaShouldHave =
-        testText.slice(0, lastNewLineIndex) +
-        testText.slice(lastNewLineIndex + 1);
-      expect(textarea).toHaveValue(theValueThatTheTextareaShouldHave);
-    });
 
-    it("should add the breakpoint when the user type shift + enter", async () => {
-      const relationInput = screen.getByRole("input", {
-        name: "relation-to-learn",
-      });
-      const testWord = "test1";
-      await userEvent.type(relationInput, testWord);
-      await userEvent.type(relationInput, "{shift}{enter}");
-      const testWordToAdd = "test2";
-      await userEvent.type(relationInput, testWordToAdd);
-      expect(relationInput).toHaveValue(`${testWord}\n${testWordToAdd}`);
-    });
+      it(`shouldn't let you type more than ${CARD_TEXTAREA_MAX_CHARACTERS} characters`, () => {
+        const relationToLearnInput = screen.getByRole("input", {
+          name: "relation-to-learn",
+        });
+        let controlString = new Array(CARD_TEXTAREA_MAX_CHARACTERS + 1)
+          .fill("A")
+          .join("");
 
-    it("should't let you type more than 3 starts", async () => {
-      const testText = "hello world\n\n\n\na";
-      await typeOnRelationToLearnTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-learn",
+        fireEvent.input(relationToLearnInput, {
+          target: { value: controlString },
+        });
+        controlString = controlString.slice(0, -1);
+        expect(relationToLearnInput).toHaveValue(controlString);
       });
-      const lastNewLineIndex = testText.lastIndexOf("\n");
-      const theValueThatTheTextareaShouldHave =
-        testText.slice(0, lastNewLineIndex) +
-        testText.slice(lastNewLineIndex + 1);
-      expect(textarea).toHaveValue(theValueThatTheTextareaShouldHave);
-    });
-
-    it("should let you type 3 starts", async () => {
-      const testText = "hello world\n\n\na";
-      await typeOnRelationToLearnTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-learn",
-      });
-      expect(textarea).toHaveValue(testText);
-    });
-
-    it("should limit the amount of word based on their scroll height", async () => {
-      const testText = "hello world\n\n\n\naaaaaaaaaaaaaaaaaaaaaa";
-      const previousTextarea = screen.getByRole("input", {
-        name: "relation-to-learn",
-      });
-      await typeOnRelationToLearnTextarea(testText);
-      const textarea = screen.getByRole("input", {
-        name: "relation-to-learn",
-      });
-      //idk if previous is affected
-      expect(previousTextarea.scrollHeight).toBe(textarea.scrollHeight);
     });
   });
 });

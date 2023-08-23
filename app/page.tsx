@@ -1,6 +1,5 @@
 import Learn from "./Learn/page";
 
-export default function Home({children}: {children: React.ReactNode}) {
-  console.log({children})
+export default function Home() {
   return <Learn />;
 }

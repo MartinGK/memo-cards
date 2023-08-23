@@ -1,13 +1,10 @@
-"use client";
-import React from "react";
 import { Popup } from "reactjs-popup";
 import styled from "styled-components";
 
 type Props = {
   message: string;
   trigger?: JSX.Element | ((isOpen: boolean) => JSX.Element) | undefined;
-  refForPosition?: React.RefObject<HTMLDivElement>;
-  isOpen?: boolean | undefined;
+  isOpen: boolean;
 };
 
 const StyledMessage = styled.span`
@@ -31,6 +28,7 @@ const StyledMessage = styled.span`
   left: -6rem;
   position: absolute;
 `;
+
 const StyledPopup = styled(Popup)`
   @keyframes anvil {
     0% {
@@ -53,28 +51,20 @@ const StyledPopup = styled(Popup)`
   &-content {
     -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
   }
+  &-content-disappear {
+    -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  }
 `;
 
+// react-popup only support animation on open, not on close
+// https://react-popup.elazizi.com/react-popup-animation
 export default function Tooltip({ message, trigger, isOpen }: Props) {
-  const handleOnCloseTooltip = (
-    event:
-      | React.SyntheticEvent<Element, Event>
-      | KeyboardEvent
-      | TouchEvent
-      | MouseEvent
-      | undefined
-  ) => {
-    //Aca tendria que hacer elefecto apra que desaparesca el element
-    //pense en utilizar un setTimeout para esperar antes de que desaparesca
-  };
-
   return (
     <StyledPopup
       trigger={trigger}
       position="right center"
       closeOnDocumentClick
       open={isOpen}
-      onClose={handleOnCloseTooltip}
     >
       <StyledMessage aria-label="tooltip" role="tooltip">
         {message}

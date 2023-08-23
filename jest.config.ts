@@ -7,13 +7,14 @@ const config: Config = {
     "^.+\\.(ts|tsx)?$": [
       "ts-jest",
       {
-        tsconfig: "./tsconfig.test.json"
+        tsconfig: "./tsconfig.test.json",
       },
     ],
     "^.+\\.(js|jsx)$": "babel-jest",
   },
+  fakeTimers: { enableGlobally: true },
   testEnvironment: "jest-environment-jsdom",
-  setupFilesAfterEnv: ["./jest.setup.ts"]
+  setupFilesAfterEnv: ["./jest.setup.ts"],
 };
 
 export default config;

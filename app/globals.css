@@ -88,20 +88,6 @@ body {
   margin: 0px;
 }
 
-body {
-  background: -moz-linear-gradient(top, #ffc459 0%, #e88517 100%);
-  background: -webkit-linear-gradient(top, #ffc459 0%, #e88517 100%);
-  background: linear-gradient(to bottom, #ffc459 0%, #e88517 100%) !important;
-  background: #ffc459;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 2rem;
-  flex-direction: column;
-}
-
 a {
   color: inherit;
   text-decoration: none;
