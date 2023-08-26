@@ -1,8 +1,10 @@
 "use client";
 import { useState, useRef } from "react";
 import Textarea from "../Textarea";
-import FlipCard, { flipCard } from "../FlipCard";
-// import StorageUseCase from "@/app/usecases/StorageUseCase";
+import FlipCard, { flipCard, removeCardFromView } from "../FlipCard";
+import LocalStorageUseCase from "../../usecases/localStorageUseCase";
+
+const storage = new LocalStorageUseCase();
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   if (ref.current) {
@@ -12,8 +14,13 @@ const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   }
 };
 
+type addToStorageParams = {
+  toRelate: string;
+  toLearn: string;
+};
+
 export default function CardAddNewRelation() {
-  const [relation, setRelation] = useState("");
+  const [toLearn, setToLearn] = useState("");
   const [toRelate, setToRelate] = useState("");
   const cardRef = useRef<HTMLDivElement>(null);
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -25,46 +32,43 @@ export default function CardAddNewRelation() {
     }
   };
 
-  type addToStorageParams = {
-    relation: string;
-    toRelate: string;
-  };
-
-  const addToStorage = ({ relation, toRelate }: addToStorageParams) => {
-    // const storage = new StorageUseCase();
-    // storage.writeItem(relation, toRelate);
+  const addToStorage = ({ toRelate, toLearn }: addToStorageParams) => {
+    storage.writeItem(toRelate, toLearn);
   };
 
   const handleKeyPressOnCardBackSide = (
     event: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (event.key === "Enter") {
-      // sendToTheSpace() BAD NAME!!!
-      addToStorage({ relation, toRelate });
+      removeCardFromView(cardRef.current);
+      event.preventDefault();
+      addToStorage({ toRelate, toLearn });
     }
   };
 
   return (
-    <FlipCard
-      ref={cardRef}
-      frontContent={
-        <Textarea
-          autoFocus
-          aria-label="relation-to-relate"
-          onKeyDown={onKeyDown}
-          onChange={(e) => setToRelate(e.target.value)}
-          value={toRelate}
-        />
-      }
-      backContent={
-        <Textarea
-          onKeyDown={handleKeyPressOnCardBackSide}
-          ref={backCardTextareaRef}
-          aria-label="relation-to-learn"
-          onChange={(e) => setRelation(e.target.value)}
-          value={relation}
-        />
-      }
-    />
+    <div>
+      <FlipCard
+        ref={cardRef}
+        frontContent={
+          <Textarea
+            autoFocus
+            aria-label="relation-to-relate"
+            onKeyDown={onKeyDown}
+            onChange={(e) => setToRelate(e.target.value)}
+            value={toRelate}
+          />
+        }
+        backContent={
+          <Textarea
+            onKeyDown={handleKeyPressOnCardBackSide}
+            ref={backCardTextareaRef}
+            aria-label="relation-to-learn"
+            onChange={(e) => setToLearn(e.target.value)}
+            value={toLearn}
+          />
+        }
+      />
+    </div>
   );
 }

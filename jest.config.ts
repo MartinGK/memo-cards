@@ -13,6 +13,9 @@ const config: Config = {
     "^.+\\.(js|jsx)$": "babel-jest",
   },
   fakeTimers: { enableGlobally: true },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+  },
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["./jest.setup.ts"],
 };

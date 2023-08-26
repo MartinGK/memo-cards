@@ -54,14 +54,20 @@ export const mockGlobalStorage = ({
   getItem = jest.fn(),
   setItem = jest.fn(),
   clear = jest.fn(),
+  removeItem = jest.fn(),
+  length = 0,
+  key = jest.fn(),
 }) => {
   const localStorageMock = {
     getItem,
     setItem,
     clear,
+    removeItem,
+    key,
+    length,
   };
 
-  global.localStorage = localStorageMock as unknown as Storage;
+  global.localStorage = localStorageMock as Storage;
 
   return { localStorageMock };
 };

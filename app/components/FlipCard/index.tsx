@@ -1,13 +1,7 @@
 "use client";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa";
-import {
-  ForwardedRef,
-  useRef,
-  ReactElement,
-  forwardRef,
-  useEffect,
-} from "react";
+import { useRef, ReactElement, forwardRef, useEffect } from "react";
 import { reassignRef } from "../../lib/refs";
 
 type FlipCardProps = {
@@ -16,7 +10,16 @@ type FlipCardProps = {
   flipOnClick?: boolean;
 };
 
-const StyledCard = styled.div`
+const CardContainer = styled.div`
+  display: contents;
+  & .flip {
+    transform: rotateY(180deg);
+  }
+  & .flip-back {
+    transform: rotateY(0deg);
+  }
+`;
+const Card = styled.div`
   min-width: 20rem;
   min-height: 160px;
   padding: 2rem;
@@ -28,18 +31,17 @@ const StyledCard = styled.div`
   transition: transform 0.8s;
   transform-style: preserve-3d;
   position: relative;
-  animation: shrinkAnimation 1s ease-in-out;
   perspective: 1000px;
 
   @keyframes shrinkAnimation {
     ${() => {
       let result = "";
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 20; i++) {
         result += `${i}% {`;
+        result += `opacity: ${1 / i};`;
         result += `transform:`;
-        result += `translateY(${Math.tanh(i)}px) `;
-        result += `translateX(${i * 7}px) `;
-        result += `scale(${1 - i * 0.01}) `;
+        // result += `translateY(${i * 7}px) `;
+        result += `translateX(${i * 70}px) `;
         result += `;}`;
       }
       return result;
@@ -47,7 +49,7 @@ const StyledCard = styled.div`
   }
 `;
 
-const StyledCardInner = styled.div`
+const CardInner = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -56,7 +58,7 @@ const StyledCardInner = styled.div`
   transform-style: preserve-3d;
 `;
 
-const StyledCardFront = styled.div`
+const CardFront = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -65,7 +67,7 @@ const StyledCardFront = styled.div`
   color: black;
 `;
 
-const StyledCardBack = styled.div`
+const CardBack = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -74,7 +76,7 @@ const StyledCardBack = styled.div`
   transform: rotateY(180deg);
 `;
 
-const StyledArrowLeft = styled(FaArrowLeft)`
+const ArrowLeft = styled(FaArrowLeft)`
   cursor: pointer;
   position: absolute;
   top: -45px;
@@ -86,7 +88,28 @@ const StyledArrowLeft = styled(FaArrowLeft)`
  * @param cardDiv It should be flipCardRef.current
  */
 export const flipCard = (cardDiv: HTMLDivElement | null) => {
-  if (cardDiv) cardDiv.style.transform = "rotateY(180deg)";
+  cardDiv?.classList.remove("flip-back");
+  cardDiv?.classList.add("flip");
+  // if (cardDiv) cardDiv.style.transform = "rotateY(180deg)";
+};
+
+/**
+ *
+ * @param cardDiv It should be flipCardRef.current
+ */
+export const flipBackCard = (cardDiv: HTMLDivElement | null) => {
+  // console.log(cardDiv?.classList.add("flip-back"));
+  cardDiv?.classList.remove("flip");
+  cardDiv?.classList.add("flip-back");
+  // if (cardDiv) cardDiv.style.transform = "rotateY(0deg)";
+};
+
+/**
+ *
+ * @param cardDiv It should be flipCardRef.current
+ */
+export const removeCardFromView = (cardDiv: HTMLDivElement | null) => {
+  if (cardDiv) cardDiv.style.animation = "shrinkAnimation 1s ease-in-out";
 };
 
 const FlipCard = forwardRef((props: FlipCardProps, ref) => {
@@ -94,7 +117,7 @@ const FlipCard = forwardRef((props: FlipCardProps, ref) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const backFlip = () => {
-    if (cardRef.current) cardRef.current.style.transform = "rotateY(0deg)";
+    if (cardRef.current) flipBackCard(cardRef.current);
   };
 
   const flip = () => {
@@ -103,23 +126,25 @@ const FlipCard = forwardRef((props: FlipCardProps, ref) => {
 
   useEffect(() => {
     reassignRef<HTMLDivElement>(ref, cardRef);
-  }, [ref, cardRef, reassignRef]);
+  }, [ref, cardRef]);
 
   return (
-    <StyledCard role="card" aria-label="flip-card" ref={cardRef} onClick={flip}>
-      <StyledCardInner className="card-inner">
-        <StyledCardFront className="card-front">{frontContent}</StyledCardFront>
-        <StyledCardBack className="card-back">
-          <StyledArrowLeft
-            className="card-arrow-left"
-            onClick={backFlip}
-            aria-label="flip-back"
-            role="button"
-          />
-          {backContent}
-        </StyledCardBack>
-      </StyledCardInner>
-    </StyledCard>
+    <CardContainer>
+      <Card role="card" aria-label="flip-card" ref={cardRef} onClick={flip}>
+        <CardInner className="card-inner">
+          <CardFront className="card-front">{frontContent}</CardFront>
+          <CardBack className="card-back">
+            <ArrowLeft
+              className="card-arrow-left"
+              onClick={backFlip}
+              aria-label="flip-back"
+              role="button"
+            />
+            {backContent}
+          </CardBack>
+        </CardInner>
+      </Card>
+    </CardContainer>
   );
 });
 

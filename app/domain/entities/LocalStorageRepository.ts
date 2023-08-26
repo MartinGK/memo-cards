@@ -1,16 +1,19 @@
-import LocalStorage from "@/app/infrastructure/LocalStorage";
+'use client'
+import LocalStorage from "../../infrastructure/localStorage";
 
-export default class LocalStorageRepository {
+class LocalStorageRepository {
   private static instance: LocalStorageRepository;
   private storage: Storage;
 
-  constructor(storage: Storage = localStorage) {
+  private constructor(storage: Storage = localStorage) {
     this.storage = storage;
   }
 
   static getInstance(): LocalStorageRepository {
     if (!LocalStorageRepository.instance) {
-      LocalStorageRepository.instance = new LocalStorageRepository(LocalStorage);
+      LocalStorageRepository.instance = new LocalStorageRepository(
+        LocalStorage
+      );
     }
     return LocalStorageRepository.instance;
   }
@@ -27,3 +30,6 @@ export default class LocalStorageRepository {
     this.storage.removeItem(key);
   }
 }
+
+// export default new LocalStorageRepository(LocalStorage)
+export default LocalStorageRepository

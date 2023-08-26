@@ -63,8 +63,6 @@ const Textarea = React.forwardRef(
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === "Enter") {
-        if (pressStartMessageRef.current)
-          clearTimeout(pressStartMessageRef.current);
         setShowPressStartMessage(false);
       } else {
         setTimerToShowPressEnterMessage();

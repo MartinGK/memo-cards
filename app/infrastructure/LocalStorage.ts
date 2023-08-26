@@ -9,6 +9,7 @@ class LocalStorage {
   }
 
   static setItem(key: string, value: string): void {
+    console.log("BUENASSS")
     localStorage.setItem(key, value);
   }
 
