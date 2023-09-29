@@ -1,3 +1,4 @@
+'use client'
 import { FaPlus } from "react-icons/fa";
 import { VscDebugStart } from "react-icons/vsc";
 import { GoChecklist } from "react-icons/go";

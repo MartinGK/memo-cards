@@ -1,3 +1,4 @@
+'use client'
 import { Popup } from "reactjs-popup";
 import styled from "styled-components";
 
