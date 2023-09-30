@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import {
   CARD_TEXTAREA_MAX_CHARACTERS,
   PRESS_ENTER_MESSAGE,
@@ -9,32 +8,6 @@ import {
 import Tooltip from "./Tooltip";
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-
-const StyledTextarea = styled.textarea`
-  background-color: transparent;
-  max-width: 100%;
-  max-height: 189px;
-  border: none;
-  resize: none;
-  font-size: 2rem;
-  color: black;
-  outline: none;
-  overflow: hidden;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  &:focus {
-    border: none;
-  }
-
-  &:focus-visible {
-    border: none;
-  }
-`;
 
 const Textarea = React.forwardRef(
   (props: TextareaProps, ref?: React.ForwardedRef<HTMLTextAreaElement>) => {
@@ -98,8 +71,9 @@ const Textarea = React.forwardRef(
 
     return (
       <>
-        <Tooltip message={PRESS_ENTER_MESSAGE} isOpen={showPressStartMessage} />
-        <StyledTextarea
+        {/* <Tooltip message={PRESS_ENTER_MESSAGE} isOpen={showPressStartMessage} /> */}
+        <textarea
+          className="bg-transparent max-w-full max-h-full border-none resize-none text-3xl text-black outline-none overflow-hidden no-scrollbar focus:border-none focus-visible:border-none"
           ref={ref}
           role="input"
           rows={5}

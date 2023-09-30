@@ -1,5 +1,4 @@
 "use client";
-import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRef, ReactElement, forwardRef, useEffect } from "react";
 import { reassignRef } from "../../lib/refs";
@@ -8,100 +7,27 @@ type FlipCardProps = {
   frontContent: ReactElement | string;
   backContent: ReactElement | string;
   flipOnClick?: boolean;
-};
-
-const CardContainer = styled.div`
-  display: contents;
-  & .flip {
-    transform: rotateY(180deg);
-  }
-  & .flip-back {
-    transform: rotateY(0deg);
-  }
-`;
-const Card = styled.div`
-  min-width: 20rem;
-  min-height: 160px;
-  padding: 2rem;
-  padding-top: 4rem;
-  margin-top: 4rem;
-  background-color: orange;
-  border-radius: 0.35rem;
-  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  position: relative;
-  perspective: 1000px;
-
-  @keyframes shrinkAnimation {
-    ${() => {
-      let result = "";
-      for (let i = 0; i < 20; i++) {
-        result += `${i}% {`;
-        result += `opacity: ${1 / i};`;
-        result += `transform:`;
-        // result += `translateY(${i * 7}px) `;
-        result += `translateX(${i * 70}px) `;
-        result += `;}`;
-      }
-      return result;
-    }}
-  }
-`;
-
-const CardInner = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-`;
-
-const CardFront = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  color: black;
-`;
-
-const CardBack = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
-`;
-
-const ArrowLeft = styled(FaArrowLeft)`
-  cursor: pointer;
-  position: absolute;
-  top: -45px;
-  left: -15px;
-`;
-
-/**
- *
- * @param cardDiv It should be flipCardRef.current
- */
-export const flipCard = (cardDiv: HTMLDivElement | null) => {
-  cardDiv?.classList.remove("flip-back");
-  cardDiv?.classList.add("flip");
-  // if (cardDiv) cardDiv.style.transform = "rotateY(180deg)";
+  isFlipped?: boolean;
 };
 
 /**
  *
  * @param cardDiv It should be flipCardRef.current
  */
-export const flipBackCard = (cardDiv: HTMLDivElement | null) => {
-  // console.log(cardDiv?.classList.add("flip-back"));
-  cardDiv?.classList.remove("flip");
-  cardDiv?.classList.add("flip-back");
-  // if (cardDiv) cardDiv.style.transform = "rotateY(0deg)";
+const flipCard = (cardDiv: HTMLDivElement | null) => {
+  cardDiv?.classList.remove("-rotate-y-180");
+  cardDiv?.classList.add("rotate-y-0");
+};
+
+/**
+ *
+ * @param cardDiv It should be flipCardRef.current
+ */
+const flipBackCard = (cardDiv: HTMLDivElement | null) => {
+  if (cardDiv) {
+    cardDiv?.classList.add("-rotate-y-180");
+    cardDiv?.classList.remove("rotate-y-0");
+  }
 };
 
 /**
@@ -109,45 +35,66 @@ export const flipBackCard = (cardDiv: HTMLDivElement | null) => {
  * @param cardDiv It should be flipCardRef.current
  */
 export const removeCardFromView = (cardDiv: HTMLDivElement | null) => {
-  if (cardDiv) cardDiv.style.animation = "shrinkAnimation 1s ease-in-out";
+  if (cardDiv) {
+    cardDiv?.classList.add("disappear-card");
+  }
 };
 
-const FlipCard = forwardRef((props: FlipCardProps, ref) => {
-  const { frontContent, backContent, flipOnClick } = props;
+function FlipCard(
+  props: FlipCardProps,
+  ref:
+    | React.ForwardedRef<unknown>
+    | React.MutableRefObject<HTMLDivElement | null>
+) {
+  const { frontContent, backContent, flipOnClick, isFlipped } = props;
   const cardRef = useRef<HTMLDivElement>(null);
 
   const backFlip = () => {
-    if (cardRef.current) flipBackCard(cardRef.current);
+    flipBackCard(cardRef.current);
   };
 
   const flip = () => {
-    if (flipOnClick && cardRef.current) flipCard(cardRef.current);
+    flipCard(cardRef.current);
   };
 
   useEffect(() => {
     reassignRef<HTMLDivElement>(ref, cardRef);
   }, [ref, cardRef]);
 
+  useEffect(() => {
+    if (isFlipped) {
+      flipCard(cardRef.current);
+    }else{
+      flipBackCard(cardRef.current);
+    }
+  }, [isFlipped]);
+
   return (
-    <CardContainer>
-      <Card role="card" aria-label="flip-card" ref={cardRef} onClick={flip}>
-        <CardInner className="card-inner">
-          <CardFront className="card-front">{frontContent}</CardFront>
-          <CardBack className="card-back">
-            <ArrowLeft
-              className="card-arrow-left"
+    <div className="contents">
+      <div
+        className="min-w-[20rem] min-h-[160px] p-[2rem] pt-[4rem] mt-[4rem] bg-orange-400 rounded-md  transition-transform duration-[0.8s] transform-style-3d perspective-1000 box-content relative -rotate-y-180"
+        role="card"
+        aria-label="flip-card"
+        ref={cardRef}
+        onClick={flip}
+      >
+        <div className="card-inner absolute w-full h-full text-center transition-transform duration-[0.8s] transform-style-3d top-0 left-0 ">
+          <div className="card-front absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] box-border p-5 rotate-y-180 ">
+            {frontContent}
+          </div>
+          <div className="card-back absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)]  box-border p-5">
+            <FaArrowLeft
+              className="card-arrow-left cursor-pointer absolute top-4 left-5"
               onClick={backFlip}
               aria-label="flip-back"
               role="button"
             />
             {backContent}
-          </CardBack>
-        </CardInner>
-      </Card>
-    </CardContainer>
+          </div>
+        </div>
+      </div>
+    </div>
   );
-});
+}
 
-FlipCard.displayName = "FlipCard";
-
-export default FlipCard;
+export default forwardRef(FlipCard);

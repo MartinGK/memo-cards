@@ -1,10 +1,12 @@
+import React from "react";
 import type { Metadata } from "next";
-// import { Inter } from 'next/font/google'
+import { Inter } from "next/font/google";
 import Header from "./components/Header";
-import StyledComponentsRegistry from "./lib/registry";
 import BodyWithBackground from "./components/BodyWithBackground";
+import Section from "./layouts/Section";
+import './global.css';
 
-// const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Memo Cards",
@@ -19,12 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <StyledComponentsRegistry>
-        <BodyWithBackground>
-          <Header />
-          {children}
-        </BodyWithBackground>
-      </StyledComponentsRegistry>
+      <BodyWithBackground>
+        <Header />
+        <Section>{children}</Section>
+      </BodyWithBackground>
     </html>
   );
 }

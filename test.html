@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <span id="test"></span>
+</input>
+
+<script>
+    document.getElementById("input").addEventListener("keydown", ketDownEventHandler())
+    function ketDownEventHandler(){
+        let timeout;
+        return (event) => {
+            if(timeout){
+                clearTimeout(timeout)
+            }
+            timeout = setTimeout(() => {
+                document.getElementById("test").textContent = event.target.value;
+            },500)
+        }
+    }
+</script>
+</body>
+</html>

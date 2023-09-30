@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import CardAddNewRelation from "../app/components/CardAddNewRelation";
+import CardAddNewRelation from "../../app/components/CardAddNewRelation";
 import {
   expectCardToBeNullAfterAnimation,
   expectToTransitionToNextCard,
@@ -10,7 +10,7 @@ import {
 import {
   CARD_TEXTAREA_MAX_CHARACTERS,
   PRESS_ENTER_MESSAGE,
-} from "../app/utils/constants";
+} from "../../app/utils/constants";
 import { act } from "react-dom/test-utils";
 
 export const typeOnRelationToRelateTextarea = (text: string) => {

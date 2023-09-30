@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Header from "../app/components/Header";
+import Header from "../../app/components/Header";
 
 jest.mock("next/navigation", () => ({
   push: jest.fn(),

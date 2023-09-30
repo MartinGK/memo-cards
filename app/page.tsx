@@ -1,5 +1,5 @@
-import Learn from "./Learn/page";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <Learn />;
+  return redirect("/Learn");
 }

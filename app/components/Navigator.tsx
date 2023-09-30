@@ -3,33 +3,13 @@ import { VscDebugStart } from "react-icons/vsc";
 import { GoChecklist } from "react-icons/go";
 import { TbListSearch } from "react-icons/tb";
 import { Routes } from "../utils/routes";
-import { styled } from "styled-components";
 import Link from "next/link";
-
-const StyledNav = styled.nav`
-  ul {
-    display: flex;
-    color: black;
-    color: white;
-    align-self: center;
-    font-size: 2rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    li {
-      padding-left: 2rem;
-      a {
-        color: black;
-      }
-    }
-  }
-`;
 
 export default function Navigator() {
   return (
-    <StyledNav aria-label="navigator" role="navigator">
-      <ul>
-        <li>
+    <nav aria-label="navigator" role="navigator">
+      <ul className="flex text-white self-center text-3xl list-none p-0 m-0">
+        <li className="pl-[2rem] text-black">
           <Link href={Routes.ADD} as={Routes.ADD} aria-label="link to add a card">
             <FaPlus />
           </Link>
@@ -50,6 +30,6 @@ export default function Navigator() {
           </Link>
         </li>
       </ul>
-    </StyledNav>
+    </nav>
   );
 }

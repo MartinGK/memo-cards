@@ -1,4 +1,4 @@
-import Add from "../../app/Add/page";
+import Add from "../../../app/Add/page";
 import { render, screen } from "@testing-library/react";
 
 describe("Add page", () => {

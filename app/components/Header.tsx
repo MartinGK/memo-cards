@@ -1,18 +1,10 @@
-"use client";
-import Navigator from "../components/Navigator";
-import styled from "styled-components";
-
-const StyledHeader = styled.header`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import Navigator from "./Navigator";
 
 export default function Header() {
   return (
-    <StyledHeader role="StyledHeader" aria-label="header">
+    <header className="flex flex-col items-center" role="header" aria-label="header">
       <h1>Welcome!</h1>
       <Navigator />
-    </StyledHeader>
+    </header>
   );
 }

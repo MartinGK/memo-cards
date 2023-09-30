@@ -1,10 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import Textarea from "../Textarea";
-import FlipCard, { flipCard, removeCardFromView } from "../FlipCard";
-import LocalStorageUseCase from "../../usecases/localStorageUseCase";
-
-const storage = new LocalStorageUseCase();
+import FlipCard from "../FlipCard";
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   if (ref.current) {
@@ -21,26 +18,26 @@ type addToStorageParams = {
 
 export default function CardAddNewRelation() {
   const [toLearn, setToLearn] = useState("");
+  const [isCardFlipped, setIsCardFlipped] = useState(false);
   const [toRelate, setToRelate] = useState("");
   const cardRef = useRef<HTMLDivElement>(null);
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
-      flipCard(cardRef.current);
+      setIsCardFlipped(true);
       focusOnTextareaRef(backCardTextareaRef);
     }
   };
 
   const addToStorage = ({ toRelate, toLearn }: addToStorageParams) => {
-    storage.writeItem(toRelate, toLearn);
+    // storage.writeItem(toRelate, toLearn);
   };
 
   const handleKeyPressOnCardBackSide = (
     event: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (event.key === "Enter") {
-      removeCardFromView(cardRef.current);
       event.preventDefault();
       addToStorage({ toRelate, toLearn });
     }
@@ -50,6 +47,7 @@ export default function CardAddNewRelation() {
     <div>
       <FlipCard
         ref={cardRef}
+        isFlipped={isCardFlipped}
         frontContent={
           <Textarea
             autoFocus
