@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import Textarea from "../Textarea";
-import FlipCard from "../FlipCard";
+import FlipCard, { flipCard } from "../FlipCard";
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   if (ref.current) {
@@ -18,14 +18,13 @@ type addToStorageParams = {
 
 export default function CardAddNewRelation() {
   const [toLearn, setToLearn] = useState("");
-  const [isCardFlipped, setIsCardFlipped] = useState(false);
   const [toRelate, setToRelate] = useState("");
   const cardRef = useRef<HTMLDivElement>(null);
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
-      setIsCardFlipped(true);
+      flipCard(cardRef.current);
       focusOnTextareaRef(backCardTextareaRef);
     }
   };
@@ -44,29 +43,28 @@ export default function CardAddNewRelation() {
   };
 
   return (
-    <div>
-      <FlipCard
-        ref={cardRef}
-        isFlipped={isCardFlipped}
-        frontContent={
-          <Textarea
-            autoFocus
-            aria-label="relation-to-relate"
-            onKeyDown={onKeyDown}
-            onChange={(e) => setToRelate(e.target.value)}
-            value={toRelate}
-          />
-        }
-        backContent={
-          <Textarea
-            onKeyDown={handleKeyPressOnCardBackSide}
-            ref={backCardTextareaRef}
-            aria-label="relation-to-learn"
-            onChange={(e) => setToLearn(e.target.value)}
-            value={toLearn}
-          />
-        }
-      />
-    </div>
+    <FlipCard
+      ref={cardRef}
+      frontContent={
+        <Textarea
+          autoFocus
+          name="words-to-relate"
+          aria-label="relation-to-relate"
+          onKeyDown={onKeyDown}
+          onChange={(e) => setToRelate(e.target.value)}
+          value={toRelate}
+        />
+      }
+      backContent={
+        <Textarea
+          onKeyDown={handleKeyPressOnCardBackSide}
+          name="relation-to-learn"
+          ref={backCardTextareaRef}
+          aria-label="relation-to-learn"
+          onChange={(e) => setToLearn(e.target.value)}
+          value={toLearn}
+        />
+      }
+    />
   );
 }

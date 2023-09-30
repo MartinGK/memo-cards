@@ -14,7 +14,7 @@ type FlipCardProps = {
  *
  * @param cardDiv It should be flipCardRef.current
  */
-const flipCard = (cardDiv: HTMLDivElement | null) => {
+export const flipCard = (cardDiv: HTMLDivElement | null) => {
   cardDiv?.classList.remove("-rotate-y-180");
   cardDiv?.classList.add("rotate-y-0");
 };
@@ -23,7 +23,7 @@ const flipCard = (cardDiv: HTMLDivElement | null) => {
  *
  * @param cardDiv It should be flipCardRef.current
  */
-const flipBackCard = (cardDiv: HTMLDivElement | null) => {
+export const flipBackCard = (cardDiv: HTMLDivElement | null) => {
   if (cardDiv) {
     cardDiv?.classList.add("-rotate-y-180");
     cardDiv?.classList.remove("rotate-y-0");
@@ -46,15 +46,11 @@ function FlipCard(
     | React.ForwardedRef<unknown>
     | React.MutableRefObject<HTMLDivElement | null>
 ) {
-  const { frontContent, backContent, flipOnClick, isFlipped } = props;
+  const { frontContent, backContent, isFlipped } = props;
   const cardRef = useRef<HTMLDivElement>(null);
 
   const backFlip = () => {
     flipBackCard(cardRef.current);
-  };
-
-  const flip = () => {
-    flipCard(cardRef.current);
   };
 
   useEffect(() => {
@@ -64,9 +60,7 @@ function FlipCard(
   useEffect(() => {
     if (isFlipped) {
       flipCard(cardRef.current);
-    }else{
-      flipBackCard(cardRef.current);
-    }
+    } 
   }, [isFlipped]);
 
   return (
@@ -76,7 +70,6 @@ function FlipCard(
         role="card"
         aria-label="flip-card"
         ref={cardRef}
-        onClick={flip}
       >
         <div className="card-inner absolute w-full h-full text-center transition-transform duration-[0.8s] transform-style-3d top-0 left-0 ">
           <div className="card-front absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] box-border p-5 rotate-y-180 ">
