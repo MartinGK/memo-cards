@@ -1,40 +1,24 @@
 "use client";
-import * as React from "react";
-import { useSpring, animated, config } from "@react-spring/web";
+import { useState, useEffect } from "react";
+import { useDebounce } from "../hooks/useDebounce";
 
 type Props = {
   children: React.ReactNode;
 };
+const getNextBgStep = (background: string) => {
+  if (bgSteps.indexOf(background) === bgSteps.length) return bgSteps[0];
+  return bgSteps[bgSteps.indexOf(background) + 1];
+};
 
-const step0 = "#ff615d";
-const step1 = "#bad5ea";
-const step2 = "#fd8769";
-const step3 = "#356d94";
-const step4 = "#ffdcb3";
+const bgSteps = ["#ff615d", "#bad5ea", "#fd8769", "#356d94", "#ffdcb3"];
 
 export default function BodyWithBackground({ children }: Props) {
-  const [{ background }] = useSpring(
-    () => ({
-      from: { background: step0 },
-      to: [
-        { background: step0 },
-        // { background: step0 },
-        // { background: step1 },
-        // { background: step1 },
-        // { background: step2 },
-        // { background: step2 },
-        // { background: step3 },
-        // { background: step3 },
-        // { background: step4 },
-        // { background: step4 },
-      ],
-      config: config.molasses,
-      loop: {
-        reverse: true,
-      },
-    }),
-    []
-  );
+  const [background, setBackground] = useState(bgSteps[0]);
+  const debouncedValue = useDebounce(background, 10000);
+
+  useEffect(() => {
+    setBackground(getNextBgStep(background));
+  }, [debouncedValue]);
 
   return (
     <body
@@ -44,8 +28,8 @@ export default function BodyWithBackground({ children }: Props) {
       <section className="w-full h-full flex z-10 flex-col items-center justify-center">
         {children}
       </section>
-      <animated.div
-        className="absolute w-full h-full z-0 inset-0 opacity-30"
+      <div
+        className="absolute w-full h-full z-0 inset-0 opacity-30 transition-all duration-[10s]"
         style={{ background }}
       />
     </body>
