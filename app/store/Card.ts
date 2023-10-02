@@ -1,15 +1,22 @@
+import uniqid from 'uniqid';
 import { makeAutoObservable } from "mobx";
 import CardHolder from "./CardHolder";
 
 export type TCard = {
   wordsToRelate: string;
   relationToRelate: string;
+  learned: boolean;
+  createdAt: Date;
+  id: string;
 };
 
 class Card {
   _card: TCard = {
     wordsToRelate: "",
     relationToRelate: "",
+    learned: false,
+    createdAt: new Date(),
+    id: uniqid()
   };
 
   constructor() {
@@ -41,14 +48,27 @@ class Card {
   }
 
   addToDatabase() {
+    this._card.createdAt = new Date();
     CardHolder.addCard(this._card);
+    this.cleanCard();
   }
 
   cleanCard() {
     this._card = {
       wordsToRelate: "",
       relationToRelate: "",
+      learned: false,
+      createdAt: new Date(),
+      id: uniqid()
     };
+  }
+
+  markAsLearned(id: string) {
+    const card = CardHolder.getCardById(id)
+    if (card) {
+      card.learned = true;
+      CardHolder.saveCard(card)
+    }
   }
 }
 

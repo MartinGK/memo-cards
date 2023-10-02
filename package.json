@@ -16,7 +16,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "^4.10.1",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.2",

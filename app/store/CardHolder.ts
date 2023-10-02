@@ -12,6 +12,10 @@ class CardHolder {
     return this._cards;
   }
 
+  get learnedCards() {
+    return this._cards.filter(c => c.learned)
+  }
+
   fetchCards() {
     if (localStorage && localStorage.getItem("cards")) {
       this._cards = JSON.parse(localStorage.getItem("cards") as string);
@@ -20,10 +24,21 @@ class CardHolder {
 
   addCard(card: TCard) {
     this._cards.push(card);
-    //save to localStorage
+    this.save()
+  }
+
+  save() {
     if (localStorage) {
       localStorage.setItem("cards", JSON.stringify(this._cards));
     }
+  }
+
+  getCardById(id: string): TCard | undefined {
+    return this._cards.find(c => c.id === id)
+  }
+
+  saveCard(card: TCard) {
+    this._cards.splice(this._cards.findIndex(c => c.id === card.id), 1, card)
   }
 }
 

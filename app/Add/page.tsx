@@ -1,5 +1,5 @@
 import CardAddNewRelation from "../components/CardAddNewRelation";
-import myCard from "@/app/models/Card";
+import myCard from "@/app/store/Card";
 
 export default function Add() {
   return (

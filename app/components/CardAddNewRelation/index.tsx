@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import Textarea from "../Textarea";
 import FlipCard, { flipCard } from "../FlipCard";
-import myCard, { type TCard } from "@/app/models/Card";
+import myCard, { type TCard } from "@/app/store/Card";
 import { observer } from "mobx-react-lite";
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
