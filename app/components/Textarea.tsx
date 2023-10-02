@@ -76,7 +76,6 @@ const Textarea = React.forwardRef(
           className="bg-transparent max-w-full max-h-full border-none resize-none text-3xl text-black outline-none overflow-hidden no-scrollbar focus:border-none focus-visible:border-none"
           ref={ref}
           role="input"
-          rows={5}
           wrap="hard"
           maxLength={90}
           autoFocus

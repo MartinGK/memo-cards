@@ -1,7 +1,9 @@
 "use client";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import Textarea from "../Textarea";
 import FlipCard, { flipCard } from "../FlipCard";
+import myCard, { type TCard } from "@/app/models/Card";
+import { observer } from "mobx-react-lite";
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   if (ref.current) {
@@ -11,14 +13,9 @@ const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   }
 };
 
-type addToStorageParams = {
-  toRelate: string;
-  toLearn: string;
-};
+type Props = { card: TCard };
 
-export default function CardAddNewRelation() {
-  const [toLearn, setToLearn] = useState("");
-  const [toRelate, setToRelate] = useState("");
+const CardAddNewRelation = observer(({ card }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,8 +26,8 @@ export default function CardAddNewRelation() {
     }
   };
 
-  const addToStorage = ({ toRelate, toLearn }: addToStorageParams) => {
-    // storage.writeItem(toRelate, toLearn);
+  const addCardToStorage = () => {
+    myCard.addToDatabase;
   };
 
   const handleKeyPressOnCardBackSide = (
@@ -38,7 +35,7 @@ export default function CardAddNewRelation() {
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      addToStorage({ toRelate, toLearn });
+      addCardToStorage();
     }
   };
 
@@ -51,8 +48,8 @@ export default function CardAddNewRelation() {
           name="words-to-relate"
           aria-label="relation-to-relate"
           onKeyDown={onKeyDown}
-          onChange={(e) => setToRelate(e.target.value)}
-          value={toRelate}
+          onChange={(e) => (card.wordsToRelate = e.target.value)}
+          value={card.wordsToRelate}
         />
       }
       backContent={
@@ -61,10 +58,12 @@ export default function CardAddNewRelation() {
           name="relation-to-learn"
           ref={backCardTextareaRef}
           aria-label="relation-to-learn"
-          onChange={(e) => setToLearn(e.target.value)}
-          value={toLearn}
+          onChange={(e) => (myCard.relationToRelate = e.target.value)}
+          value={myCard.relationToRelate}
         />
       }
     />
   );
-}
+});
+
+export default CardAddNewRelation;

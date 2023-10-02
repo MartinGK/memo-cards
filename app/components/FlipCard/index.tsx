@@ -72,10 +72,10 @@ function FlipCard(
         ref={cardRef}
       >
         <div className="card-inner absolute w-full h-full text-center transition-transform duration-[0.8s] transform-style-3d top-0 left-0 ">
-          <div className="card-front absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] box-border p-5 rotate-y-180 ">
+          <div className="card-front absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] flex justify-center items-center box-border p-5 rotate-y-180 ">
             {frontContent}
           </div>
-          <div className="card-back absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)]  box-border p-5">
+          <div className="card-back absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] flex justify-center items-center box-border p-5">
             <FaArrowLeft
               className="card-arrow-left cursor-pointer absolute top-4 left-5"
               onClick={backFlip}
