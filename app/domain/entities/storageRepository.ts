@@ -1,5 +1,6 @@
+"use client"
 import LocalStorageRepository from "./localStorageRepository";
-import SessionStorageRepository from "./sessionStorageRepository";
+import SessionStorageRepository from "./SessionStorageRepository";
 
 type StorageTypes = LocalStorageRepository | SessionStorageRepository;
 

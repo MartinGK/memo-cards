@@ -1,5 +1,5 @@
 import LocalStorageRepository from "../domain/entities/localStorageRepository";
-import StorageRepository from "../domain/entities/storageRepository";
+import StorageRepository from "../domain/entities/StorageRepository";
 
 export default class LocalStorageUseCase {
   private localStorageRepository: StorageRepository;

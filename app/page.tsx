@@ -1,5 +1,5 @@
-import Learn from "./Learn/page";
+import Add from "./Add/page";
 
 export default function Home() {
-  return <Learn />;
+  return <Add />;
 }

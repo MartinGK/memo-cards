@@ -1,4 +1,4 @@
-import Section from "../layouts/sectionLayout";
+import Section from "../layouts/SectionLayout";
 
 export default function Learned() {
   return (

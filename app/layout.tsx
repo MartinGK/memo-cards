@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
-// import { Inter } from 'next/font/google'
 import Header from "./components/Header";
 import StyledComponentsRegistry from "./lib/registry";
 import BodyWithBackground from "./components/BodyWithBackground";
-
-// const inter = Inter({ subsets: ['latin'] })
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Memo Cards",

@@ -1,3 +1,4 @@
+"use client"
 import SessionStorage from "../../infrastructure/sessionStorage";
 
 class SessionStorageRepository {
