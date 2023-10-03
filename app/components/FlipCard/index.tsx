@@ -8,6 +8,7 @@ type FlipCardProps = {
   backContent: ReactElement | string;
   flipOnClick?: boolean;
   isFlipped?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
 
 /**
@@ -46,10 +47,11 @@ function FlipCard(
     | React.ForwardedRef<unknown>
     | React.MutableRefObject<HTMLDivElement | null>
 ) {
-  const { frontContent, backContent, isFlipped } = props;
+  const { frontContent, backContent, isFlipped, onClick } = props;
   const cardRef = useRef<HTMLDivElement>(null);
 
   const backFlip = () => {
+    console.log(cardRef.current)
     flipBackCard(cardRef.current);
   };
 
@@ -66,18 +68,19 @@ function FlipCard(
   return (
     <div className="contents">
       <div
-        className="min-w-[20rem] min-h-[160px] p-[2rem] pt-[4rem] mt-[4rem] bg-orange-400 rounded-md  transition-transform duration-[0.8s] transform-style-3d perspective-1000 box-content relative -rotate-y-180"
+        className="min-w-[20rem] min-h-[160px] p-[2rem] pt-[4rem] mt-[4rem] transition-transform duration-[0.8s] transform-style-3d perspective-1000 box-content relative -rotate-y-180"
         role="card"
         aria-label="flip-card"
         ref={cardRef}
+        onClick={onClick}
       >
-        <div className="card-inner absolute w-full h-full text-center transition-transform duration-[0.8s] transform-style-3d top-0 left-0 ">
-          <div className="card-front absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] flex justify-center items-center box-border p-5 rotate-y-180 ">
+        <div className="card-inner absolute w-full  h-full text-center transition-transform duration-[0.8s] transform-style-3d top-0 left-0 ">
+          <div className="card-front absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] flex justify-center items-center box-border p-5 rotate-y-180 bg-orange-400 rounded-xl  ">
             {frontContent}
           </div>
-          <div className="card-back absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] flex justify-center items-center box-border p-5">
+          <div className="card-back absolute top-0 left-0 w-full h-full backface-hidden shadow-[10px_10px_10px_10px_rgba(0,0,0,0.2)] flex justify-center items-center box-border p-5 bg-orange-400 rounded-xl  ">
             <FaArrowLeft
-              className="card-arrow-left cursor-pointer absolute top-4 left-5"
+              className="card-arrow-left cursor-pointer absolute top-4 left-5 z-10"
               onClick={backFlip}
               aria-label="flip-back"
               role="button"

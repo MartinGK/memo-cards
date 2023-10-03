@@ -1,6 +1,6 @@
 import uniqid from 'uniqid';
 import { makeAutoObservable } from "mobx";
-import CardHolder from "./CardHolder";
+import { RootStore } from './RootStore';
 
 export type TCard = {
   wordsToRelate: string;
@@ -10,7 +10,7 @@ export type TCard = {
   id: string;
 };
 
-class Card {
+export class Card {
   _card: TCard = {
     wordsToRelate: "",
     relationToRelate: "",
@@ -18,8 +18,10 @@ class Card {
     createdAt: new Date(),
     id: uniqid()
   };
+  store: RootStore;
 
-  constructor() {
+  constructor(store: RootStore) {
+    this.store = store;
     makeAutoObservable(this);
   }
 
@@ -49,7 +51,7 @@ class Card {
 
   addToDatabase() {
     this._card.createdAt = new Date();
-    CardHolder.addCard(this._card);
+    this.store.cardHolder.addCard(this._card);
     this.cleanCard();
   }
 
@@ -64,14 +66,10 @@ class Card {
   }
 
   markAsLearned(id: string) {
-    const card = CardHolder.getCardById(id)
+    const card = this.store.cardHolder.getCardById(id)
     if (card) {
       card.learned = true;
-      CardHolder.saveCard(card)
+      this.store.cardHolder.saveCard(card)
     }
   }
 }
-
-const myCard = new Card();
-
-export default myCard;

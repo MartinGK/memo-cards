@@ -1,5 +1,4 @@
 import CardAddNewRelation from "../components/CardAddNewRelation";
-import myCard from "@/app/store/Card";
 
 export default function Add() {
   return (
@@ -8,7 +7,7 @@ export default function Add() {
       role="container"
       aria-label="add-container"
     >
-      <CardAddNewRelation card={myCard} />
+      <CardAddNewRelation  />
     </div>
   );
 }

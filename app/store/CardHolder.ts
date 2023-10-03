@@ -1,10 +1,13 @@
 import { makeAutoObservable } from "mobx";
 import { TCard } from "./Card";
+import { RootStore } from "./RootStore";
 
-class CardHolder {
+export class CardHolder {
   _cards: TCard[] = [];
+  root: RootStore;
 
-  constructor() {
+  constructor(root: RootStore) {
+    this.root = root;
     makeAutoObservable(this);
   }
 
@@ -13,9 +16,14 @@ class CardHolder {
   }
 
   get learnedCards() {
-    return this._cards.filter(c => c.learned)
+    return this._cards.filter((c) => c.learned);
   }
 
+
+  init(){
+    this.fetchCards()
+  }
+  
   fetchCards() {
     if (localStorage && localStorage.getItem("cards")) {
       this._cards = JSON.parse(localStorage.getItem("cards") as string);
@@ -24,7 +32,7 @@ class CardHolder {
 
   addCard(card: TCard) {
     this._cards.push(card);
-    this.save()
+    this.save();
   }
 
   save() {
@@ -34,14 +42,18 @@ class CardHolder {
   }
 
   getCardById(id: string): TCard | undefined {
-    return this._cards.find(c => c.id === id)
+    return this._cards.find((c) => c.id === id);
   }
 
   saveCard(card: TCard) {
-    this._cards.splice(this._cards.findIndex(c => c.id === card.id), 1, card)
+    this._cards.splice(
+      this._cards.findIndex((c) => c.id === card.id),
+      1,
+      card
+    );
+  }
+
+  getRandomCardToLearn():TCard {
+    return this._cards.filter(c=>!c.learned)[Math.floor(Math.random() * this._cards.length)];
   }
 }
-
-const myCardHolder = new CardHolder();
-
-export default myCardHolder;

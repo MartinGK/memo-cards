@@ -1,9 +1,10 @@
 "use client";
 import { useRef } from "react";
 import Textarea from "../Textarea";
-import FlipCard, { flipCard } from "../FlipCard";
-import myCard, { type TCard } from "@/app/store/Card";
+import FlipCard, { flipBackCard, flipCard } from "../FlipCard";
+import { type TCard } from "@/app/store/Card";
 import { observer } from "mobx-react-lite";
+import { useRootStore } from "@/app/contexts/RootStoreContext";
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   if (ref.current) {
@@ -13,9 +14,8 @@ const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   }
 };
 
-type Props = { card: TCard };
-
-const CardAddNewRelation = observer(({ card }: Props) => {
+const CardAddNewRelation = observer(() => {
+  const { card, cardHolder } = useRootStore()
   const cardRef = useRef<HTMLDivElement>(null);
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -27,7 +27,8 @@ const CardAddNewRelation = observer(({ card }: Props) => {
   };
 
   const addCardToStorage = () => {
-    myCard.addToDatabase;
+    card.addToDatabase();
+    flipBackCard(cardRef.current);
   };
 
   const handleKeyPressOnCardBackSide = (
@@ -58,8 +59,8 @@ const CardAddNewRelation = observer(({ card }: Props) => {
           name="relation-to-learn"
           ref={backCardTextareaRef}
           aria-label="relation-to-learn"
-          onChange={(e) => (myCard.relationToRelate = e.target.value)}
-          value={myCard.relationToRelate}
+          onChange={(e) => (card.relationToRelate = e.target.value)}
+          value={card.relationToRelate}
         />
       }
     />

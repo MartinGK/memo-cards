@@ -1,3 +1,5 @@
+import CardsTable from './CardsTable'
+
 export default function ToLearn() {
-  return <div>ToLearn</div>;
+  return <CardsTable />;
 }

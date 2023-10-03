@@ -4,8 +4,8 @@ import { Inter } from "next/font/google";
 import Header from "./components/Header";
 import BodyWithBackground from "./components/BodyWithBackground";
 import Section from "./layouts/Section";
+import RootStore from "./Providers/RootStore";
 import "./global.css";
-import Body from "./components/Body";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <BodyWithBackground>
-        <Header />
-        <Section>{children}</Section>
-      </BodyWithBackground>
+      <RootStore>
+        <BodyWithBackground>
+          <Header />
+          <Section>{children}</Section>
+        </BodyWithBackground>
+      </RootStore>
     </html>
   );
 }
