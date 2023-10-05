@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import { shrinkAnimation, anvilAnimation } from "./styles/keyframes";
+import { shrinkAnimation, anvilAnimation, jumpInAndRotateY } from "./styles/keyframes";
 
 const config: Config = {
   content: [
@@ -15,15 +15,19 @@ const config: Config = {
       },
       "no-scrollbar": {
         "-ms-overflow-style": "none",
-        "scrollbar-width": "none"
+        "scrollbar-width": "none",
+      },
+      animation:{
+        "jump-in-and-rotate-y--180": "jump-in-and-rotate-y--180 .5s both"
       },
       keyframes: {
         shrinkAnimation: shrinkAnimation(),
-        anvil: anvilAnimation()
+        anvil: anvilAnimation(),
+        "jump-in-and-rotate-y--180": jumpInAndRotateY(-180),
       },
     },
   },
-  plugins: [require("tailwindcss-3d")],
+  plugins: [require("tailwindcss-3d"), require("tailwindcss-animated")],
 };
 
 export default config;

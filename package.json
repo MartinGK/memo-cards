@@ -18,6 +18,7 @@
     "react-dom": "latest",
     "react-icons": "^4.10.1",
     "reactjs-popup": "^2.0.6",
+    "tailwindcss-animated": "^1.0.1",
     "uniqid": "^5.4.0"
   },
   "devDependencies": {

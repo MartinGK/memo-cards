@@ -2,22 +2,35 @@
 import format from "date-fns/format";
 import { useRootStore } from "../contexts/RootStoreContext";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
+import { BsCheckCircleFill, BsTrashFill } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import { TD, TR, TBody } from "../components/Table";
+import { TCard } from "../store/Card";
 
 const CardsTableRows = observer(() => {
+  const [cards,setCards] = useState<TCard[]>([]);
   const { cardHolder } = useRootStore();
+
+  const deleteCard = (id: string) => {
+    cardHolder.deleteCardById(id)
+  }
 
   useEffect(() => {
     if (!cardHolder.cards.length) {
       cardHolder.fetchCards();
     }
   }, []);
+
+  useEffect(() => {
+    if (cardHolder.cards.length) {
+      setCards(cardHolder.cards);
+    }
+  }, [cardHolder.cards]);
+
   return (
     <TBody>
-      {cardHolder.cards.map((card, index) => (
+      {cards.map((card, index) => (
         <TR key={card.id} className="border-b dark:border-neutral-500">
           <TD className="font-medium">{index + 1}</TD>
           <TD>{format(new Date(card.createdAt), "d LLL, Y")}</TD>
@@ -29,6 +42,9 @@ const CardsTableRows = observer(() => {
             ) : (
               <ImCross className="text-red-600" />
             )}
+          </TD>
+          <TD>
+            <BsTrashFill className="text-gray-600 cursor-pointer" onClick={()=>deleteCard(card.id)}/>
           </TD>
         </TR>
       ))}

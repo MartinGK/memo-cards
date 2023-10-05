@@ -1,8 +1,7 @@
 "use client";
 import { useRef } from "react";
 import Textarea from "../Textarea";
-import FlipCard, { flipBackCard, flipCard } from "../FlipCard";
-import { type TCard } from "@/app/store/Card";
+import FlipCard from "../FlipCard";
 import { observer } from "mobx-react-lite";
 import { useRootStore } from "@/app/contexts/RootStoreContext";
 
@@ -15,20 +14,15 @@ const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
 };
 
 const CardAddNewRelation = observer(() => {
-  const { card, cardHolder } = useRootStore()
+  const { card } = useRootStore();
   const cardRef = useRef<HTMLDivElement>(null);
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
-      flipCard(cardRef.current);
+      card.flip();
       focusOnTextareaRef(backCardTextareaRef);
     }
-  };
-
-  const addCardToStorage = () => {
-    card.addToDatabase();
-    flipBackCard(cardRef.current);
   };
 
   const handleKeyPressOnCardBackSide = (
@@ -36,13 +30,19 @@ const CardAddNewRelation = observer(() => {
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      addCardToStorage();
+      card.addToDatabase();
+      card.disappearCard();
+      setTimeout(() =>{
+        card.cleanCard();
+        card.appearCard();
+      }, 500)
     }
   };
 
   return (
     <FlipCard
       ref={cardRef}
+      // isFlipped={isFlipped}
       frontContent={
         <Textarea
           autoFocus

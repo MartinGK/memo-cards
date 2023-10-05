@@ -19,13 +19,12 @@ export class CardHolder {
     return this._cards.filter((c) => c.learned);
   }
 
-
-  init(){
-    this.fetchCards()
+  init() {
+    this.fetchCards();
   }
-  
+
   fetchCards() {
-    if (localStorage && localStorage.getItem("cards")) {
+    if (checkIfLocalStorageIsAvailable() && localStorage.getItem("cards")) {
       this._cards = JSON.parse(localStorage.getItem("cards") as string);
     }
   }
@@ -36,7 +35,7 @@ export class CardHolder {
   }
 
   save() {
-    if (localStorage) {
+    if (checkIfLocalStorageIsAvailable()) {
       localStorage.setItem("cards", JSON.stringify(this._cards));
     }
   }
@@ -53,7 +52,20 @@ export class CardHolder {
     );
   }
 
-  getRandomCardToLearn():TCard {
-    return this._cards.filter(c=>!c.learned)[Math.floor(Math.random() * this._cards.length)];
+  getRandomCardToLearn(): TCard {
+    return this._cards.filter((c) => !c.learned)[
+      Math.floor(Math.random() * this._cards.length)
+    ];
+  }
+
+  deleteCardById(id: string) {
+    this._cards.splice(
+      this._cards.findIndex((c) => c.id === id),
+      1
+    );
+    this.save();
   }
 }
+
+const checkIfLocalStorageIsAvailable = () =>
+  typeof localStorage !== "undefined";

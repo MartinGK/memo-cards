@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Table, { TH, THead } from "../components/Table";
 import TR from "../components/Table/TR";
 import CardTableRows from "./CardsTableRows";
@@ -11,24 +12,17 @@ export default function CardsTable() {
             <Table className="min-w-full text-left text-sm font-light">
               <THead className="border-b font-medium dark:border-neutral-500">
                 <TR>
-                  <TH>
-                    #
-                  </TH>
-                  <TH>
-                    Date of creation
-                  </TH>
-                  <TH>
-                    Word/s
-                  </TH>
-                  <TH>
-                    Relation
-                  </TH>
-                  <TH>
-                    Learned
-                  </TH>
+                  <TH>#</TH>
+                  <TH>Date of creation</TH>
+                  <TH>Word/s</TH>
+                  <TH>Relation</TH>
+                  <TH>Learned</TH>
+                  <TH></TH>
                 </TR>
               </THead>
-              <CardTableRows />
+              <Suspense fallback={<tbody><tr></tr></tbody>}>
+                <CardTableRows />
+              </Suspense>
             </Table>
           </div>
         </div>

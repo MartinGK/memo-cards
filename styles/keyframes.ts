@@ -36,3 +36,20 @@ export const anvilAnimation = (): KeyValuePair<
   };
   return result;
 };
+
+export const jumpInAndRotateY = (deg: number):KeyValuePair<
+string,
+KeyValuePair<string, string>
+> => {
+  let result: KeyValuePair<string, KeyValuePair<string, string>> = {};
+  result["0%"] = {
+    transform: `scale(0%) rotateY(${deg}deg);`,
+  };
+  result["80%"] = {
+    transform: `scale(120%) rotateY(${deg}deg);`,
+  };
+  result["100%"] = {
+    transform: `scale(100%) rotateY(${deg}deg);`,
+  };
+  return result;
+}

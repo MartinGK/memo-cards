@@ -1,4 +1,4 @@
-type Props = { children: React.ReactNode; className?: string };
+type Props = { children?: React.ReactNode; className?: string };
 
 export default function TH({ children, className }: Props) {
   return (
