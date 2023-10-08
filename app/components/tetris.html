@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        margin: 0;
+        padding:0;
+        place-content: center;
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="tetris"> </canvas>
+    <script>
+      // 0 = Empty
+      // 1 = Wall
+      // 2 = Break
+      const board = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      ];
+
+      const canvas = document.querySelector("#tetris");
+      const context = canvas.getContext("2d");
+
+      const BLOCK_SIZE = 20;
+      const BOARD_WIDTH = 14;
+      const BOARD_HEIGHT =  30;
+
+      canvas.width = BLOCK_SIZE * BOARD_WIDTH;
+      canvas.height = BLOCK_SIZE * BOARD_HEIGHT;
+
+      context.scale(BLOCK_SIZE, BLOCK_SIZE);
+
+      function update() {
+        draw();
+        window.requestAnimationFrame(update);
+      }
+
+      function draw() {
+        context.fillStyle = "#00";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        board.forEach((row, y) => {
+          row.forEach((value, x) => {
+            if (value === 1) {
+              context.fillStyle = "#c4c4c4";
+              context.fillRect(x, y, 1, 1);
+            }
+            if (value === 2) {
+              context.fillStyle = "#FEFF16";
+              context.fillRect(x, y, 1, 1);
+            }
+          });
+        });
+      }
+
+      update();
+    </script>
+  </body>
+</html>

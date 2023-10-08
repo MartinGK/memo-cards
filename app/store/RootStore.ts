@@ -3,11 +3,11 @@ import { Card } from "./Card";
 
 export class RootStore {
   cardHolder: CardHolder;
-  card: Card;
+  // card: Card;
 
   constructor() {
     this.cardHolder = new CardHolder(this);
-    this.card = new Card(this);
+    // this.card = new Card(this);
 
     this.cardHolder.init();
   }

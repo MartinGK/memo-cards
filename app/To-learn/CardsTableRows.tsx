@@ -3,7 +3,8 @@ import format from "date-fns/format";
 import { useRootStore } from "../contexts/RootStoreContext";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { BsCheckCircleFill, BsTrashFill } from "react-icons/bs";
+import { BsTrashFill } from "react-icons/bs";
+import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { TD, TR, TBody } from "../components/Table";
 import { TCard } from "../store/Card";
@@ -38,7 +39,7 @@ const CardsTableRows = observer(() => {
           <TD>{card.relationToRelate}</TD>
           <TD className="flex justify-center">
             {card.learned ? (
-              <BsCheckCircleFill className="text-green-600" />
+              <FaCheck className="text-green-600" />
             ) : (
               <ImCross className="text-red-600" />
             )}

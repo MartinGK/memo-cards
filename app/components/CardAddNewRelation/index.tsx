@@ -1,9 +1,11 @@
 "use client";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Textarea from "../Textarea";
 import FlipCard from "../FlipCard";
 import { observer } from "mobx-react-lite";
 import { useRootStore } from "@/app/contexts/RootStoreContext";
+import { Card } from "@/app/store/Card";
+import { trace } from "mobx";
 
 const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
   if (ref.current) {
@@ -14,52 +16,54 @@ const focusOnTextareaRef = (ref: React.RefObject<HTMLTextAreaElement>) => {
 };
 
 const CardAddNewRelation = observer(() => {
-  const { card } = useRootStore();
-  const cardRef = useRef<HTMLDivElement>(null);
+  // trace(true);
+  const { cardHolder } = useRootStore();
+  const [card] = useState(() => new Card());
   const backCardTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const frontCardTextareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      card.flip();
-      focusOnTextareaRef(backCardTextareaRef);
+  const onFrontContentStartPress = useCallback(() => {
+    card.relationToRelate = "";
+    focusOnTextareaRef(backCardTextareaRef);
+  }, [card.wordsToRelate, card.relationToRelate]);
+
+  const onBackContentStartPress = useCallback(() => {
+    if (card.relationToRelate.length) {
+      cardHolder.addCardAndCleanIt(card);
+      focusOnTextareaRef(frontCardTextareaRef);
     }
+  }, [card.wordsToRelate, card.relationToRelate]);
+
+  const handleChangeFrontCardTextarea = (e: any) => {
+    card.wordsToRelate = e.target.value;
   };
 
-  const handleKeyPressOnCardBackSide = (
-    event: React.KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      card.addToDatabase();
-      card.disappearCard();
-      setTimeout(() =>{
-        card.cleanCard();
-        card.appearCard();
-      }, 500)
-    }
+  const handleChangeBackCardTextarea = (e: any) => {
+    card.relationToRelate = e.target.value;
   };
 
   return (
     <FlipCard
-      ref={cardRef}
-      // isFlipped={isFlipped}
+      flipOnStartPress
+      disappearOnStartPressAtBackContent
+      onFrontContentStartPress={onFrontContentStartPress}
+      onBackContentStartPress={onBackContentStartPress}
       frontContent={
         <Textarea
           autoFocus
           name="words-to-relate"
+          ref={frontCardTextareaRef}
           aria-label="relation-to-relate"
-          onKeyDown={onKeyDown}
-          onChange={(e) => (card.wordsToRelate = e.target.value)}
+          onChange={handleChangeFrontCardTextarea}
           value={card.wordsToRelate}
         />
       }
       backContent={
         <Textarea
-          onKeyDown={handleKeyPressOnCardBackSide}
           name="relation-to-learn"
           ref={backCardTextareaRef}
           aria-label="relation-to-learn"
-          onChange={(e) => (card.relationToRelate = e.target.value)}
+          onChange={handleChangeBackCardTextarea}
           value={card.relationToRelate}
         />
       }

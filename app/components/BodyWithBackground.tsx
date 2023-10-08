@@ -25,7 +25,7 @@ export default function BodyWithBackground({ children }: Props) {
       className="
       flex flex-col items-center w-screen h-screen justify-center relative m-0"
     >
-      <section className="w-full h-full flex z-10 flex-col items-center justify-center">
+      <section className="w-full h-full flex z-10 flex-col items-center justify-center overflow-scroll">
         {children}
       </section>
       <div

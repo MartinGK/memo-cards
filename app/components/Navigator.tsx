@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Navigator() {
   return (
-    <nav aria-label="navigator" role="navigator">
+    <nav aria-label="navigator" role="navigator" >
       <ul className="flex text-white self-center text-3xl list-none p-0 m-0 gap-4">
         <li className="pl-[2rem] text-black">
           <Link href={Routes.ADD} as={Routes.ADD} aria-label="link to add a card">
