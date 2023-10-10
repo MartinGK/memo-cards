@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useContext } from "react";
+import { RootStore } from "../store/RootStore";
 
 // holds a reference to the store (singleton)
 let store: RootStore

@@ -14,10 +14,10 @@ class ERootStore {
 }
 
 class EChildStoreOne {
-  root: RootStore;
+  root: ERootStore;
   // storeTwo: ChildStoreTwo; // IDK why this is here
 
-  constructor(root: RootStore) {
+  constructor(root: ERootStore) {
     this.root = root;
     // no work here only assignments
   }
@@ -33,10 +33,10 @@ class EChildStoreOne {
 }
 
 class EChildStoreTwo {
-  root: RootStore;
+  root: ERootStore;
   //   storeOne: ChildStoreOne; // IDK why this is here
 
-  constructor(root: RootStore) {
+  constructor(root: ERootStore) {
     this.root = root;
     // move real initialization work to the init method
   }
@@ -51,7 +51,7 @@ class EChildStoreTwo {
   }
 }
 
-function _createChildStoreTwo(root: RootStore) {
+function _createChildStoreTwo(root: ERootStore) {
   return {
     root,
     getSomethingFromStoreOne() {
