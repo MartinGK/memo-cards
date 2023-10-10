@@ -1,0 +1,650 @@
+[
+  {
+    "wordsToRelate": "a heap",
+    "relationToRelate": "un monton"
+  },
+  {
+    "wordsToRelate": "a shelf",
+    "relationToRelate": "un estante"
+  },
+  {
+    "wordsToRelate": "seamlessly",
+    "relationToRelate": "sin problemas"
+  },
+  {
+    "wordsToRelate": "termed",
+    "relationToRelate": "denominado"
+  },
+  {
+    "wordsToRelate": "stands for",
+    "relationToRelate": "significa"
+  },
+  {
+    "wordsToRelate": "enquiry",
+    "relationToRelate": "consulta"
+  },
+  {
+    "wordsToRelate": "consulta",
+    "relationToRelate": "capabilities"
+  },
+  {
+    "wordsToRelate": "capacidades",
+    "relationToRelate": "ad infinitum"
+  },
+  {
+    "wordsToRelate": "indefinidamente",
+    "relationToRelate": "ad infinitum"
+  },
+  {
+    "wordsToRelate": "indefinidamente",
+    "relationToRelate": "advent"
+  },
+  {
+    "wordsToRelate": "adviento",
+    "relationToRelate": "affairs"
+  },
+  {
+    "wordsToRelate": "asuntos",
+    "relationToRelate": "albeit"
+  },
+  {
+    "wordsToRelate": "aunque",
+    "relationToRelate": "anvil"
+  },
+  {
+    "wordsToRelate": "yunque",
+    "relationToRelate": "apt"
+  },
+  {
+    "wordsToRelate": "apto",
+    "relationToRelate": "attainable"
+  },
+  {
+    "wordsToRelate": "alcanzable",
+    "relationToRelate": "binds"
+  },
+  {
+    "wordsToRelate": "binds",
+    "relationToRelate": "une"
+  },
+  {
+    "wordsToRelate": "boils down",
+    "relationToRelate": "se reduce"
+  },
+  {
+    "wordsToRelate": "bound",
+    "relationToRelate": "límite"
+  },
+  {
+    "wordsToRelate": "budget",
+    "relationToRelate": "presupuesto"
+  },
+  {
+    "wordsToRelate": "but rather",
+    "relationToRelate": "sino más bien"
+  },
+  {
+    "wordsToRelate": "can masquerade",
+    "relationToRelate": "puede disfrazarse"
+  },
+  {
+    "wordsToRelate": "Candid",
+    "relationToRelate": "Sincero"
+  },
+  {
+    "wordsToRelate": "captivity",
+    "relationToRelate": "cautiverio"
+  },
+  {
+    "wordsToRelate": "caught fire",
+    "relationToRelate": "se incendio"
+  },
+  {
+    "wordsToRelate": "caveats",
+    "relationToRelate": "advertencias"
+  },
+  {
+    "wordsToRelate": "changelessness",
+    "relationToRelate": "inmutabilidad"
+  },
+  {
+    "wordsToRelate": "circumvent",
+    "relationToRelate": "eludir"
+  },
+  {
+    "wordsToRelate": "cleanliness",
+    "relationToRelate": "limpieza"
+  },
+  {
+    "wordsToRelate": "clerk",
+    "relationToRelate": "empleado/oficinista"
+  },
+  {
+    "wordsToRelate": "closure",
+    "relationToRelate": "cierre"
+  },
+  {
+    "wordsToRelate": "cohesive",
+    "relationToRelate": "cohesivo"
+  },
+  {
+    "wordsToRelate": "coined",
+    "relationToRelate": "acuñó"
+  },
+  {
+    "wordsToRelate": "conferred",
+    "relationToRelate": "conferido"
+  },
+  {
+    "wordsToRelate": "constrained",
+    "relationToRelate": "constreñido"
+  },
+  {
+    "wordsToRelate": "contrivance/con-trai-vaens",
+    "relationToRelate": "estratagema"
+  },
+  {
+    "wordsToRelate": "Conversely",
+    "relationToRelate": "En cambio"
+  },
+  {
+    "wordsToRelate": "correctness",
+    "relationToRelate": "exactitud"
+  },
+  {
+    "wordsToRelate": "creeping",
+    "relationToRelate": "progresivo/a"
+  },
+  {
+    "wordsToRelate": "deem",
+    "relationToRelate": "considerar"
+  },
+  {
+    "wordsToRelate": "deluded",
+    "relationToRelate": "engañada/o"
+  },
+  {
+    "wordsToRelate": "depict",
+    "relationToRelate": "representar"
+  },
+  {
+    "wordsToRelate": "depictions",
+    "relationToRelate": "representaciones"
+  },
+  {
+    "wordsToRelate": "developability/develop-ability",
+    "relationToRelate": "desarrollabilidad"
+  },
+  {
+    "wordsToRelate": "devilishly",
+    "relationToRelate": "endiabladamente"
+  },
+  {
+    "wordsToRelate": "doomed",
+    "relationToRelate": "condenado"
+  },
+  {
+    "wordsToRelate": "drudgery",
+    "relationToRelate": "trabajo penoso"
+  },
+  {
+    "wordsToRelate": "duty",
+    "relationToRelate": "deber"
+  },
+  {
+    "wordsToRelate": "facade/fa-saad",
+    "relationToRelate": "fachada"
+  },
+  {
+    "wordsToRelate": "falsifiable/falsi-fi-able",
+    "relationToRelate": "falsificable"
+  },
+  {
+    "wordsToRelate": "feasible",
+    "relationToRelate": "factible"
+  },
+  {
+    "wordsToRelate": "folks",
+    "relationToRelate": "personas"
+  },
+  {
+    "wordsToRelate": "foolishness",
+    "relationToRelate": "tontería"
+  },
+  {
+    "wordsToRelate": "footnoted",
+    "relationToRelate": "nota al pie"
+  },
+  {
+    "wordsToRelate": "fulfillment",
+    "relationToRelate": "cumplimiento"
+  },
+  {
+    "wordsToRelate": "furnace",
+    "relationToRelate": "horno"
+  },
+  {
+    "wordsToRelate": "gist",
+    "relationToRelate": "escencia"
+  },
+  {
+    "wordsToRelate": "Godspeed",
+    "relationToRelate": "Buena suerte"
+  },
+  {
+    "wordsToRelate": "granule",
+    "relationToRelate": "granulo"
+  },
+  {
+    "wordsToRelate": "grasp",
+    "relationToRelate": "comprender"
+  },
+  {
+    "wordsToRelate": "grasp",
+    "relationToRelate": "comprension"
+  },
+  {
+    "wordsToRelate": "handy",
+    "relationToRelate": "práctica"
+  },
+  {
+    "wordsToRelate": "hardly",
+    "relationToRelate": "dificilmente"
+  },
+  {
+    "wordsToRelate": "Hare",
+    "relationToRelate": "liebre"
+  },
+  {
+    "wordsToRelate": "harnesses the power",
+    "relationToRelate": "aprovecha el poder"
+  },
+  {
+    "wordsToRelate": "haste",
+    "relationToRelate": "prisa"
+  },
+  {
+    "wordsToRelate": "hindsight",
+    "relationToRelate": "comprensión retrospectiva"
+  },
+  {
+    "wordsToRelate": "hodgepodge",
+    "relationToRelate": "mezcolanza"
+  },
+  {
+    "wordsToRelate": "if we squinted",
+    "relationToRelate": "Si entrecerramos los ojos"
+  },
+  {
+    "wordsToRelate": "incorrectness",
+    "relationToRelate": "incorrección"
+  },
+  {
+    "wordsToRelate": "Indeed",
+    "relationToRelate": "En efecto"
+  },
+  {
+    "wordsToRelate": "Indeed,",
+    "relationToRelate": "En efecto,"
+  },
+  {
+    "wordsToRelate": "induction",
+    "relationToRelate": "inducción"
+  },
+  {
+    "wordsToRelate": "innermost",
+    "relationToRelate": "más interna"
+  },
+  {
+    "wordsToRelate": "interchangeably",
+    "relationToRelate": "indistintamente"
+  },
+  {
+    "wordsToRelate": "is brought",
+    "relationToRelate": "se pone"
+  },
+  {
+    "wordsToRelate": "it’s cause for concern",
+    "relationToRelate": "es motivo de preocupación"
+  },
+  {
+    "wordsToRelate": "jigsaw",
+    "relationToRelate": "rompecabezas"
+  },
+  {
+    "wordsToRelate": "jitter",
+    "relationToRelate": "nervioso"
+  },
+  {
+    "wordsToRelate": "layout",
+    "relationToRelate": "disposicion"
+  },
+  {
+    "wordsToRelate": "likewise",
+    "relationToRelate": "asimismo"
+  },
+  {
+    "wordsToRelate": "livid",
+    "relationToRelate": "lívida/o"
+  },
+  {
+    "wordsToRelate": "Make no mistake",
+    "relationToRelate": "No cometer errores"
+  },
+  {
+    "wordsToRelate": "meager",
+    "relationToRelate": "pobre"
+  },
+  {
+    "wordsToRelate": "Mistress",
+    "relationToRelate": "Amante"
+  },
+  {
+    "wordsToRelate": "nasty",
+    "relationToRelate": "asqueroso"
+  },
+  {
+    "wordsToRelate": "necessitated",
+    "relationToRelate": "requerido/necesitado"
+  },
+  {
+    "wordsToRelate": "no access whatsoever",
+    "relationToRelate": "sin acceso alguno"
+  },
+  {
+    "wordsToRelate": "nuanced/nuu-anst",
+    "relationToRelate": "matizada"
+  },
+  {
+    "wordsToRelate": "nurture",
+    "relationToRelate": "nutrir"
+  },
+  {
+    "wordsToRelate": "outlet",
+    "relationToRelate": "salida"
+  },
+  {
+    "wordsToRelate": "outpacing",
+    "relationToRelate": "superando"
+  },
+  {
+    "wordsToRelate": "outward",
+    "relationToRelate": "exterior"
+  },
+  {
+    "wordsToRelate": "overarching",
+    "relationToRelate": "global"
+  },
+  {
+    "wordsToRelate": "overarching theme",
+    "relationToRelate": "tema general"
+  },
+  {
+    "wordsToRelate": "overconfidence",
+    "relationToRelate": "exceso de seguridad"
+  },
+  {
+    "wordsToRelate": "payroll",
+    "relationToRelate": "nómina"
+  },
+  {
+    "wordsToRelate": "petered out",
+    "relationToRelate": "se apago/se agoto"
+  },
+  {
+    "wordsToRelate": "pressures never abate",
+    "relationToRelate": "Las presiones nunca disminuyen"
+  },
+  {
+    "wordsToRelate": "prior",
+    "relationToRelate": "Antes"
+  },
+  {
+    "wordsToRelate": "probable/pro-bable",
+    "relationToRelate": "probable"
+  },
+  {
+    "wordsToRelate": "prompts us",
+    "relationToRelate": "nos incita"
+  },
+  {
+    "wordsToRelate": "provable/prov-able",
+    "relationToRelate": "demostrable"
+  },
+  {
+    "wordsToRelate": "pump",
+    "relationToRelate": "bomba"
+  },
+  {
+    "wordsToRelate": "Rather",
+    "relationToRelate": "Mas bien,"
+  },
+  {
+    "wordsToRelate": "rearward",
+    "relationToRelate": "hacia atras"
+  },
+  {
+    "wordsToRelate": "receding from view",
+    "relationToRelate": "desvaneciendo de la vista"
+  },
+  {
+    "wordsToRelate": "recoiled",
+    "relationToRelate": "retrocedió"
+  },
+  {
+    "wordsToRelate": "relents",
+    "relationToRelate": "cede"
+  },
+  {
+    "wordsToRelate": "relieved",
+    "relationToRelate": "relevaron"
+  },
+  {
+    "wordsToRelate": "relocatable",
+    "relationToRelate": "reutilizable"
+  },
+  {
+    "wordsToRelate": "restated",
+    "relationToRelate": "reformulado"
+  },
+  {
+    "wordsToRelate": "retried",
+    "relationToRelate": "reintentada"
+  },
+  {
+    "wordsToRelate": "revenues",
+    "relationToRelate": "ingresos"
+  },
+  {
+    "wordsToRelate": "riding",
+    "relationToRelate": "recorrer/montar"
+  },
+  {
+    "wordsToRelate": "rites",
+    "relationToRelate": "ritos"
+  },
+  {
+    "wordsToRelate": "rosy",
+    "relationToRelate": "rosada/o"
+  },
+  {
+    "wordsToRelate": "routinely",
+    "relationToRelate": "rutinariamente"
+  },
+  {
+    "wordsToRelate": "scarcely",
+    "relationToRelate": "apenas"
+  },
+  {
+    "wordsToRelate": "seldom",
+    "relationToRelate": "rara vez/raramente"
+  },
+  {
+    "wordsToRelate": "slapped it onto",
+    "relationToRelate": "Colocar, dejar caer en, (viene de abofetear)"
+  },
+  {
+    "wordsToRelate": "stake",
+    "relationToRelate": "participacion/apuesta"
+  },
+  {
+    "wordsToRelate": "stamp their feet",
+    "relationToRelate": "pisotear"
+  },
+  {
+    "wordsToRelate": "steady",
+    "relationToRelate": "constante"
+  },
+  {
+    "wordsToRelate": "stopped cold.",
+    "relationToRelate": "."
+  },
+  {
+    "wordsToRelate": "se detuvo en seco.",
+    "relationToRelate": "strive/strai-v"
+  },
+  {
+    "wordsToRelate": "esforzarse",
+    "relationToRelate": "struggle"
+  },
+  {
+    "wordsToRelate": "lucha",
+    "relationToRelate": "stunning"
+  },
+  {
+    "wordsToRelate": "impresionante",
+    "relationToRelate": "sump"
+  },
+  {
+    "wordsToRelate": "sumidero",
+    "relationToRelate": "that addresses"
+  },
+  {
+    "wordsToRelate": "que aborda",
+    "relationToRelate": "that weighed"
+  },
+  {
+    "wordsToRelate": "que pesaba",
+    "relationToRelate": "the sheer number"
+  },
+  {
+    "wordsToRelate": "el gran número",
+    "relationToRelate": "the sole driver"
+  },
+  {
+    "wordsToRelate": "el único impulsor",
+    "relationToRelate": "thereabouts"
+  },
+  {
+    "wordsToRelate": "aproximadamente",
+    "relationToRelate": "thereby"
+  },
+  {
+    "wordsToRelate": "de este modo",
+    "relationToRelate": "they battled it out."
+  },
+  {
+    "wordsToRelate": "ellos lucharon",
+    "relationToRelate": "thoroughly/ tooughly"
+  },
+  {
+    "wordsToRelate": "minuciosamente",
+    "relationToRelate": "though"
+  },
+  {
+    "wordsToRelate": "sin embargo.",
+    "relationToRelate": "Thrives"
+  },
+  {
+    "wordsToRelate": "propera (verbo)",
+    "relationToRelate": "Thus"
+  },
+  {
+    "wordsToRelate": "De este modo",
+    "relationToRelate": "thwarted"
+  },
+  {
+    "wordsToRelate": "frustrado",
+    "relationToRelate": "tightly"
+  },
+  {
+    "wordsToRelate": "estrechamente",
+    "relationToRelate": "tightly bound."
+  },
+  {
+    "wordsToRelate": "Muy unido",
+    "relationToRelate": "To comply with"
+  },
+  {
+    "wordsToRelate": "para cumplir con",
+    "relationToRelate": "to meet"
+  },
+  {
+    "wordsToRelate": "reunirse/para cumplir",
+    "relationToRelate": "trickery"
+  },
+  {
+    "wordsToRelate": "astucia",
+    "relationToRelate": "tweaked"
+  },
+  {
+    "wordsToRelate": "retocado",
+    "relationToRelate": "unabashedly"
+  },
+  {
+    "wordsToRelate": "descaradamente",
+    "relationToRelate": "unabashedly squabble"
+  },
+  {
+    "wordsToRelate": "pelearse descaradamente",
+    "relationToRelate": "unaffordably"
+  },
+  {
+    "wordsToRelate": "inasequiblemente",
+    "relationToRelate": "unlikely"
+  },
+  {
+    "wordsToRelate": "poco probable",
+    "relationToRelate": "unreliable"
+  },
+  {
+    "wordsToRelate": "no confiable",
+    "relationToRelate": "unrestrained"
+  },
+  {
+    "wordsToRelate": "desenfrenado",
+    "relationToRelate": "upon"
+  },
+  {
+    "wordsToRelate": "sobre",
+    "relationToRelate": "utterly"
+  },
+  {
+    "wordsToRelate": "absolutamente",
+    "relationToRelate": "wading into a fight"
+  },
+  {
+    "wordsToRelate": "meterse en una pelea",
+    "relationToRelate": "whatsoever/what-so-ever"
+  },
+  {
+    "wordsToRelate": "lo que/ alguno",
+    "relationToRelate": "wherein/ wer’in"
+  },
+  {
+    "wordsToRelate": "donde",
+    "relationToRelate": "will jitter"
+  },
+  {
+    "wordsToRelate": "variara",
+    "relationToRelate": "worthwhile"
+  },
+  {
+    "wordsToRelate": "worthwhile",
+    "relationToRelate": "vale la pena"
+  },
+  {
+    "wordsToRelate": "you can bank on",
+    "relationToRelate": "puedes apostar"
+  }
+]

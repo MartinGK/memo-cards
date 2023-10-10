@@ -17,27 +17,29 @@ const CardRelationToLearn = observer(() => {
 
   const handleClickCross = () => {
     if (card) cardHolder.markCardAsUnlearned(card);
-    disappearCardAndBringANewOne();
+    setBringNewCard(true);
+    setTimeout(() => {
+      setNewCard();
+    }, 500);
   };
 
   const handleClickCheck = () => {
-    if (card) cardHolder.markCardAsLearned(card);
-    disappearCardAndBringANewOne();
+    setBringNewCard(true);
+    setIsFlipped(false);
+    setTimeout(() => {
+      if (card) cardHolder.markCardAsLearned(card);
+      setNewCard();
+    }, 500);
   };
 
-  const disappearCardAndBringANewOne = () => {
-    setBringNewCard(true);
-  };
+  const setNewCard = () => {
+    setCard(cardHolder.getRandomCardToLearn());
+    setBringNewCard(false);
+  }
 
   const onCardClick = () => {
     setIsFlipped(true);
   };
-
-  useEffect(() => {
-    if (bringNewCard) {
-      setCard(cardHolder.getRandomCardToLearn());
-    }
-  }, [bringNewCard]);
 
   return (
     <>
@@ -45,11 +47,12 @@ const CardRelationToLearn = observer(() => {
         flipOnClick
         bringNewCard={bringNewCard}
         onClick={onCardClick}
+        onBackFlip={() => setIsFlipped(false)}
         frontContent={<span>{card?.wordsToRelate}</span>}
         backContent={<span>{card?.relationToRelate}</span>}
       />
       <div
-        className={`flex flex-col mt-10 border p-5 px-10 rounded border-black transition-all ${
+        className={`flex flex-col mt-10 border p-5 px-10 rounded border-black transition-all delay-300 ${
           isFlipped ? "opacity-100" : "opacity-0"
         }`}
       >
