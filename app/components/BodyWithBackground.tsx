@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useDebounce } from "../hooks/useDebounce";
+import { ValueOf } from "next/dist/shared/lib/constants";
 
 type Props = {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ const bgSteps = ["#ff615d", "#bad5ea", "#fd8769", "#356d94", "#ffdcb3"];
 
 export default function BodyWithBackground({ children }: Props) {
   const [background, setBackground] = useState(bgSteps[0]);
+  // const background: string = useMemo(() => getNextBgStep(background), [debouncedValue]);
   const debouncedValue = useDebounce(background, 10000);
 
   useEffect(() => {
