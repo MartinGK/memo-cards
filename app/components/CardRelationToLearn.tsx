@@ -2,7 +2,7 @@
 import { observer } from "mobx-react-lite";
 import FlipCard from "./FlipCard";
 import { useRootStore } from "../contexts/RootStoreContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { TCard } from "../store/Card";
@@ -18,6 +18,7 @@ const CardRelationToLearn = observer(() => {
   const handleClickCross = () => {
     if (card) cardHolder.markCardAsUnlearned(card);
     setBringNewCard(true);
+    setIsFlipped(false);
     setTimeout(() => {
       setNewCard();
     }, 500);

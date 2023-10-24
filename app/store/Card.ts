@@ -33,8 +33,21 @@ export class Card {
     newCard.learned = card.learned;
     newCard.createdAt = card.createdAt;
     newCard.id = card.id;
-    return newCard
+    return newCard;
   };
+
+  public static createCard({
+    wordsToRelate,
+    relationToRelate,
+  }: {
+    wordsToRelate: string;
+    relationToRelate: string;
+  }) {
+    const card = new Card();
+    card.wordsToRelate = wordsToRelate;
+    card.relationToRelate = relationToRelate;
+    return card;
+  }
 
   get wordsToRelate() {
     return this._wordsToRelate;

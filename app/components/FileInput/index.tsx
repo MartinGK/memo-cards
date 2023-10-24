@@ -1,10 +1,11 @@
-export function FileInput() {
+
+export function FileInput({ ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <>
-      <label htmlFor="images" className="drop-container">
+      <label htmlFor={props.id || "input-file"} className="drop-container">
         <span className="drop-title">Drop files here</span>
         or
-        <input type="file" id="images" accept="image/*" required />
+        <input type="file" id={props.id || "input-file"} required {...props}/>
       </label>
       <style>
         {`

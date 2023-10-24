@@ -34,6 +34,20 @@ export class CardHolder {
     }
   }
 
+  createAndSaveCard({
+    wordsToRelate,
+    relationToRelate,
+  }: {
+    wordsToRelate: string;
+    relationToRelate: string;
+  }) {
+    const card = Card.createCard({
+      wordsToRelate,
+      relationToRelate,
+    });
+    this.addCard(card);
+  }
+
   addCard(card: Card) {
     this._cards.push(this.getCardDataToSave(card));
     this.save();
